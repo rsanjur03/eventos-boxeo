@@ -10,9 +10,135 @@ import '../styles/global.css';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>COMIBOX Chiriquí</title>
+		<title>Comibox De Chiriquí</title>
 	</head>
-	<body>
+	<body class="bg-[var(--bg-light)] text-[var(--text-main)] font-sans antialiased">
+		
+		{/* Top Bar (Contact Info) */}
+		<div class="bg-white py-3 px-4 border-b border-gray-200 hidden md:block">
+			<div class="max-w-7xl mx-auto flex justify-between items-center text-sm">
+				<div class="flex items-center gap-2">
+					<div class="w-8 h-8 rounded-full bg-[var(--color-gold)] flex items-center justify-center text-black font-bold">📍</div>
+					<div>
+						<p class="font-bold text-[var(--text-main)]">Dirección de nuestra oficina</p>
+						<p class="text-[var(--text-muted)] text-xs">Calle B sur y Segunda Oeste. David, Chiriquí.</p>
+					</div>
+				</div>
+				<div class="flex items-center gap-2">
+					<div class="w-8 h-8 rounded-full bg-[var(--color-gold)] flex items-center justify-center text-black font-bold">✉️</div>
+					<div>
+						<p class="font-bold text-[var(--text-main)]">Correo electrónico para comunicaciones</p>
+						<p class="text-[var(--text-muted)] text-xs">contact@domain.com</p>
+					</div>
+				</div>
+				<div class="flex items-center gap-2">
+					<div class="w-8 h-8 rounded-full bg-[var(--color-gold)] flex items-center justify-center text-black font-bold">📞</div>
+					<div>
+						<p class="font-bold text-[var(--text-main)]">Llama a nuestro equipo directamente</p>
+						<p class="text-[var(--text-muted)] text-xs">+50766714646</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{/* Navigation Bar */}
+		<nav class="bg-black sticky top-0 z-50">
+			<div class="max-w-7xl mx-auto px-4">
+				<div class="flex justify-between h-20 items-center">
+					{/* Logo */}
+					<a href="/" class="flex-shrink-0 flex items-center">
+						<span class="text-2xl font-bold text-[var(--color-gold)]">
+							Comibox De Chiriquí
+						</span>
+					</a>
+					
+					{/* Desktop Menu */}
+					<div class="hidden md:flex items-center space-x-6">
+						<a href="/" class="text-[var(--color-gold)] hover:text-white font-bold text-sm transition-colors">Home</a>
+						<a href="/eventos" class="text-white hover:text-[var(--color-gold)] font-bold text-sm transition-colors">Services</a>
+						<a href="/organizacion" class="text-white hover:text-[var(--color-gold)] font-bold text-sm transition-colors">About</a>
+						<a href="/promotores" class="text-white hover:text-[var(--color-gold)] font-bold text-sm transition-colors">Contact</a>
+						<a href="/boxeadores" class="text-white hover:text-[var(--color-gold)] font-bold text-sm transition-colors">Blog</a>
+						
+						{/* Social Icons (mock) */}
+						<div class="flex items-center gap-3 ml-4">
+							<span class="text-white text-sm cursor-pointer hover:text-[var(--color-gold)]">F</span>
+							<span class="text-white text-sm cursor-pointer hover:text-[var(--color-gold)]">T</span>
+							<span class="text-white text-sm cursor-pointer hover:text-[var(--color-gold)]">P</span>
+							<span class="text-white text-sm cursor-pointer hover:text-[var(--color-gold)]">IN</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		{/* Page Content */}
 		<slot />
+		
+		{/* Footer */}
+		<footer class="bg-[#0a0a0a] pt-20 mt-20">
+			<div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+				{/* Column 1 */}
+				<div>
+					<h3 class="text-[var(--color-primary)] text-2xl font-bold mb-4">Comibox De Chiriquí</h3>
+					<p class="text-white text-sm leading-relaxed mb-6">
+						Súmate a la regulación del boxeo en Chiriquí y contribuye a su crecimiento.
+					</p>
+					<div class="flex gap-3">
+						<div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold text-xs">F</div>
+						<div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold text-xs">P</div>
+						<div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold text-xs">G+</div>
+					</div>
+				</div>
+				
+				{/* Column 2 */}
+				<div>
+					<h3 class="text-white text-xl font-bold mb-6">Enlaces Útiles</h3>
+					<ul class="space-y-4 text-white text-sm">
+						<li><a href="/" class="hover:text-[var(--color-primary)]">Home</a></li>
+						<li><a href="/eventos" class="hover:text-[var(--color-primary)]">Services</a></li>
+						<li><a href="/organizacion" class="hover:text-[var(--color-primary)]">About</a></li>
+						<li><a href="/promotores" class="hover:text-[var(--color-primary)]">Contact</a></li>
+						<li><a href="/boxeadores" class="hover:text-[var(--color-primary)]">Blog</a></li>
+					</ul>
+				</div>
+
+				{/* Column 3 */}
+				<div>
+					<h3 class="text-white text-xl font-bold mb-6">Servicios</h3>
+					<ul class="space-y-4 text-white text-sm">
+						<li>Autorización de Eventos</li>
+						<li>Evaluaciones Médicas</li>
+						<li>Dirección de Árbitros y Jueces</li>
+						<li>Promoción de Eventos</li>
+						<li>Transparencia en el Boxeo</li>
+					</ul>
+				</div>
+
+				{/* Column 4 */}
+				<div>
+					<h3 class="text-white text-xl font-bold mb-6">Suscríbete a nuestro boletín</h3>
+					<p class="text-white text-sm mb-6">
+						Mantente al día con nuestras actualizaciones y oportunidades en el boxeo.
+					</p>
+					<form class="flex flex-col gap-3">
+						<input type="email" placeholder="Correo electrónico para comunicarnos" class="p-3 w-full bg-white text-black rounded text-sm focus:outline-none" />
+						<button type="button" class="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-bold py-3 px-4 rounded transition-colors">
+							Suscribirse
+						</button>
+					</form>
+				</div>
+			</div>
+			
+			{/* Bottom Bar */}
+			<div class="bg-[var(--color-gold)] py-4">
+				<div class="max-w-7xl mx-auto px-4 flex justify-between items-center text-black text-sm">
+					<p>© 2026 Comibox de Chiriquí</p>
+					<button class="w-10 h-10 bg-[var(--color-primary)] text-white rounded-full flex items-center justify-center font-bold shadow-lg hover:bg-[var(--color-primary-hover)] transition-colors">
+						↑
+					</button>
+				</div>
+			</div>
+		</footer>
 	</body>
 </html>
