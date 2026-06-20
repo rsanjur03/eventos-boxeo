@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #FF6B00; /* Orange STRYD */
+    --color-primary-hover: #E55A00;
+    --color-gold: #D4AF37; /* For boxing premium details */
+    
+    --bg-dark: #000000;
+    --bg-card: #1a1a1a;
+    --bg-card-hover: #2d2d2d;
+    
+    --text-main: #FFFFFF;
+    --text-muted: #A0A0A0;
+  }
+  
+  body {
+    @apply bg-[var(--bg-dark)] text-[var(--text-main)] font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .glassmorphism {
+    @apply bg-black/40 backdrop-blur-md border border-white/10;
+  }
+}

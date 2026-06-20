@@ -1,11 +1,52 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BoxersPreview from '../components/BoxersPreview.jsx';
 ---
 
 <Layout>
-	<Welcome />
+  <main className="min-h-screen">
+    {/* Hero Section */}
+    <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-[var(--bg-dark)] z-10"></div>
+      <img 
+        src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=2000&auto=format&fit=crop" 
+        alt="Boxing Ring" 
+        className="absolute inset-0 w-full h-full object-cover grayscale opacity-40"
+      />
+      <div className="relative z-20 text-center px-4 max-w-4xl mx-auto">
+        <h1 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tight mb-4">
+          Comisión de Boxeo de <span className="text-[var(--color-primary)]">Chiriquí</span>
+        </h1>
+        <p className="text-xl md:text-2xl text-[var(--text-muted)] font-light mb-8 max-w-2xl mx-auto">
+          Forjando disciplina, construyendo campeones. 
+        </p>
+        <div className="flex justify-center gap-4">
+          <a href="/eventos" className="px-8 py-4 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-bold uppercase tracking-wider rounded transition-colors duration-300">
+            Próximos Eventos
+          </a>
+          <a href="/organizacion" className="px-8 py-4 bg-transparent border border-white/20 hover:border-white/50 text-white font-bold uppercase tracking-wider rounded transition-colors duration-300 glassmorphism">
+            Nuestra Misión
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* Mission Section */}
+    <section className="py-24 px-4 bg-[var(--bg-dark)]">
+      <div className="max-w-5xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-gold)] uppercase tracking-widest mb-8">
+          Más que un Deporte
+        </h2>
+        <div className="glassmorphism p-8 md:p-12 rounded-xl text-left border-l-4 border-l-[var(--color-primary)]">
+          <p className="text-lg md:text-xl text-[var(--text-main)] leading-relaxed mb-6">
+            La <strong>COMIBOX de Chiriquí</strong> es una organización sin fines de lucro conformada por directivos que trabajamos de forma <span className="text-[var(--color-primary)] font-semibold">ad honorem</span>. No cobramos por nuestra labor.
+          </p>
+          <p className="text-lg md:text-xl text-[var(--text-muted)] leading-relaxed mb-6">
+            Nuestra única función es promover y regular este noble deporte, ofreciendo una plataforma segura y profesional. Sabemos que el boxeo aleja a nuestros jóvenes de las calles y las drogas, brindándoles la <strong>disciplina y estructura</strong> que muchos necesitan para superar las duras pruebas de la vida.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </Layout>

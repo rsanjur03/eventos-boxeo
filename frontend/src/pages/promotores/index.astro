@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout>
+  <main className="min-h-screen bg-[var(--bg-dark)] py-12 px-4">
+    <div className="max-w-4xl mx-auto">
+      
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-black text-white uppercase tracking-tight mb-4">
+          Portal de <span className="text-[var(--color-primary)]">Promotores</span>
+        </h1>
+        <p className="text-[var(--text-muted)]">
+          Solicita la aprobación de la COMIBOX para tu próximo evento, gestiona documentos y sube requisitos (exámenes, contratos).
+        </p>
+      </div>
+
+      <div className="glassmorphism rounded-2xl p-8 border-t-4 border-[var(--color-primary)]">
+        <h2 className="text-2xl font-bold text-white mb-6 uppercase">Solicitud de Nuevo Evento</h2>
+        
+        <form className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* Promotor Info */}
+            <div className="space-y-4">
+              <h3 className="text-[var(--color-gold)] font-semibold uppercase text-sm tracking-wider">Datos del Organizador</h3>
+              <div>
+                <label className="block text-[var(--text-muted)] text-sm mb-1">Nombre / Empresa</label>
+                <input type="text" className="w-full bg-black/50 border border-white/20 rounded p-3 text-white focus:outline-none focus:border-[var(--color-primary)]" placeholder="Ej. STRYD Panama" />
+              </div>
+              <div>
+                <label className="block text-[var(--text-muted)] text-sm mb-1">Correo Electrónico</label>
+                <input type="email" className="w-full bg-black/50 border border-white/20 rounded p-3 text-white focus:outline-none focus:border-[var(--color-primary)]" placeholder="promotor@ejemplo.com" />
+              </div>
+            </div>
+
+            {/* Event Info */}
+            <div className="space-y-4">
+              <h3 className="text-[var(--color-gold)] font-semibold uppercase text-sm tracking-wider">Datos del Evento</h3>
+              <div>
+                <label className="block text-[var(--text-muted)] text-sm mb-1">Nombre del Evento</label>
+                <input type="text" className="w-full bg-black/50 border border-white/20 rounded p-3 text-white focus:outline-none focus:border-[var(--color-primary)]" placeholder="Noche de Campeones" />
+              </div>
+              <div>
+                <label className="block text-[var(--text-muted)] text-sm mb-1">Lugar / Arena</label>
+                <input type="text" className="w-full bg-black/50 border border-white/20 rounded p-3 text-white focus:outline-none focus:border-[var(--color-primary)]" placeholder="Arena Roberto Durán" />
+              </div>
+              <div>
+                <label className="block text-[var(--text-muted)] text-sm mb-1">Fecha Propuesta</label>
+                <input type="date" className="w-full bg-black/50 border border-white/20 rounded p-3 text-white focus:outline-none focus:border-[var(--color-primary)]" />
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 pt-6">
+            <h3 className="text-[var(--color-gold)] font-semibold uppercase text-sm tracking-wider mb-4">Cartelera Principal (Peleas Propuestas)</h3>
+            
+            <div className="bg-black/30 p-4 rounded border border-white/10 mb-4">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_1fr_auto] gap-4 items-center">
+                <input type="text" className="w-full bg-black/50 border border-white/20 rounded p-2 text-white text-sm" placeholder="Boxeador A (Si existe, autocompleta)" />
+                <span className="text-white font-bold text-center">VS</span>
+                <input type="text" className="w-full bg-black/50 border border-white/20 rounded p-2 text-white text-sm" placeholder="Boxeador B" />
+                <input type="text" className="w-full bg-black/50 border border-white/20 rounded p-2 text-white text-sm" placeholder="Peso Pactado" />
+                <input type="number" className="w-20 bg-black/50 border border-white/20 rounded p-2 text-white text-sm" placeholder="Rounds" />
+              </div>
+            </div>
+            
+            <button type="button" className="text-[var(--color-primary)] text-sm hover:underline font-bold">+ Agregar Pelea</button>
+          </div>
+
+          <div className="bg-blue-900/20 border border-blue-500/30 p-4 rounded text-blue-200 text-sm leading-relaxed mt-6">
+            <p><strong>Nota:</strong> Al enviar esta solicitud, la COMIBOX revisará los detalles y generará una cotización de los costos oficiales de la comisión. Podrás descargar la cotización en PDF y acceder a un portal para subir los contratos, exámenes médicos y fotografías de los peleadores.</p>
+          </div>
+
+          <button type="submit" className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-bold py-4 px-6 rounded uppercase tracking-wider transition-colors duration-300 mt-6">
+            Enviar Solicitud de Evento
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// This will later be replaced by a fetch to SonicJS:
+// const res = await fetch(`${import.meta.env.SONICJS_API_URL}/api/content?collection=board_members`);
+// const boardMembers = await res.json();
+
+const boardMembers = [
+  {
+    id: 1,
+    title: 'Dr. Ejemplo Presidente',
+    role: 'Presidente',
+    bio: 'Médico de profesión con más de 20 años apoyando el deporte local. Firme creyente en la disciplina como motor de cambio social.',
+    imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop'
+  },
+  {
+    id: 2,
+    title: 'Lic. Ejemplo Tesorero',
+    role: 'Tesorero',
+    bio: 'Contador Público Autorizado. Encargado de la transparencia y manejo de los fondos de la comisión ad honorem.',
+    imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop'
+  },
+  {
+    id: 3,
+    title: 'Ing. Ejemplo Secretario',
+    role: 'Secretario',
+    bio: 'Ingeniero apasionado por el boxeo. Coordina la logística y comunicaciones de los eventos regulados por la COMIBOX.',
+    imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop'
+  }
+];
+---
+
+<Layout>
+  <main className="min-h-screen bg-[var(--bg-dark)] py-12 px-4">
+    
+    <div className="max-w-6xl mx-auto">
+      {/* Header */}
+      <div className="text-center mb-16">
+        <h1 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-4">
+          Nuestra <span className="text-[var(--color-primary)]">Organización</span>
+        </h1>
+        <p className="text-lg text-[var(--text-muted)] max-w-3xl mx-auto">
+          Conoce a la junta directiva de la COMIBOX Chiriquí. Un equipo multidisciplinario trabajando de manera voluntaria por el futuro del deporte y nuestros jóvenes.
+        </p>
+      </div>
+
+      {/* Board Members Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {boardMembers.map((member) => (
+          <div key={member.id} className="glassmorphism rounded-2xl overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+            <div className="h-64 overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent z-10"></div>
+              <img 
+                src={member.imageUrl} 
+                alt={member.title} 
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 grayscale"
+              />
+            </div>
+            <div className="p-6 relative z-20 -mt-12">
+              <span className="inline-block px-3 py-1 bg-[var(--color-gold)] text-black text-xs font-bold uppercase tracking-wider rounded mb-3">
+                {member.role}
+              </span>
+              <h3 className="text-2xl font-bold text-white mb-2">{member.title}</h3>
+              <p className="text-[var(--text-muted)] text-sm leading-relaxed">
+                {member.bio}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* History Section */}
+      <div className="mt-24 glassmorphism p-8 md:p-12 rounded-2xl border-t-4 border-[var(--color-gold)]">
+        <h2 className="text-3xl font-bold text-white mb-6 uppercase">Nuestra Historia</h2>
+        <div className="prose prose-invert max-w-none text-[var(--text-muted)]">
+          <p className="mb-4">
+            La Comisión de Boxeo de Chiriquí fue fundada con el propósito de regular, promover y salvaguardar la integridad de los boxeadores en nuestra provincia. A lo largo de los años, hemos supervisado decenas de eventos, asegurando que se cumplan estrictamente las normativas médicas y deportivas.
+          </p>
+          <p>
+            Nuestro mayor orgullo no son solo los campeones que hemos visto nacer, sino los jóvenes que, a través de la disciplina del gimnasio y el ring, han logrado forjar un futuro lejos de las calles. Cada evento organizado bajo nuestra supervisión es un paso más hacia una sociedad más sana.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</Layout>
