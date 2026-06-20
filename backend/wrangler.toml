@@ -1,4 +1,4 @@
-name = "my-sonicjs-app"
+name = "eventos-boxeo-backend"
 main = "src/index.ts"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
@@ -9,14 +9,14 @@ workers_dev = true
 # D1 Database
 [[d1_databases]]
 binding = "DB"
-database_name = "backend-db"
-database_id = "YOUR_DATABASE_ID" # Run: wrangler d1 create my-sonicjs-db
+database_name = "eventos-comiboxch-db"
+database_id = "05166ffb-f486-4407-b16d-5989655f2280" # Run: wrangler d1 create my-sonicjs-db
 migrations_dir = "./node_modules/@sonicjs-cms/core/migrations"
 
 # R2 Bucket for media storage
 [[r2_buckets]]
 binding = "MEDIA_BUCKET"
-bucket_name = "backend-media"
+bucket_name = "eventos-comiboxch-media"
 
 # Environment variables
 [vars]
