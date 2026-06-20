@@ -5,7 +5,7 @@ import Layout from '../layouts/Layout.astro';
 // If the backend is running locally, it's usually on port 8788
 let boardMembers = [];
 try {
-  const apiUrl = import.meta.env.SONICJS_API_URL || 'http://127.0.0.1:8788';
+  const apiUrl = import.meta.env.SONICJS_API_URL || 'http://127.0.0.1:8787';
   const res = await fetch(`${apiUrl}/v1/content/board-members`);
   if (res.ok) {
     const data = await res.json();

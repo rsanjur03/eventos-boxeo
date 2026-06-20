@@ -9,8 +9,8 @@ workers_dev = true
 # D1 Database
 [[d1_databases]]
 binding = "DB"
-database_name = "eventos-comiboxch-db"
-database_id = "05166ffb-f486-4407-b16d-5989655f2280" # Run: wrangler d1 create my-sonicjs-db
+database_name = "sonicjs-worktree-master"
+database_id = "72d8d928-9b9b-49ee-8941-55ccc02481f0" # Run: wrangler d1 create my-sonicjs-db
 migrations_dir = "./node_modules/@sonicjs-cms/core/migrations"
 
 # R2 Bucket for media storage
