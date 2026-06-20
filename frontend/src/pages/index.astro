@@ -1,5 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+// Fetch board members for the home page preview
+let teamMembers = [];
+try {
+  const apiUrl = import.meta.env.SONICJS_API_URL || 'http://127.0.0.1:8788';
+  const res = await fetch(`${apiUrl}/v1/content/board-members`);
+  if (res.ok) {
+    const data = await res.json();
+    teamMembers = data.data || [];
+  }
+} catch (error) {
+  console.error('Error connecting to SonicJS on home page:', error);
+}
+
+if (teamMembers.length === 0) {
+  teamMembers = [
+    { title: "Ejemplo: Nuestro Equipo", role: "Coordinador de Eventos", imageUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop" },
+    { title: "Ejemplo: Entrenador Principal", role: "Asesor Médico", imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" },
+    { title: "Ejemplo: Especialista", role: "Comunicación Social", imageUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop" }
+  ];
+}
+// Show only top 3 on home page
+const topMembers = teamMembers.slice(0, 3);
 ---
 
 <Layout>
@@ -122,20 +145,16 @@ import Layout from '../layouts/Layout.astro';
         <h2 class="text-4xl font-bold text-[var(--text-main)] mb-16">Involúcrate Con Comibox</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { role: "Coordinador de Eventos", name: "Nuestro Equipo", img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop" },
-            { role: "Asesor Médico", name: "Entrenador Principal", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" },
-            { role: "Comunicación Social", name: "Especialista en Regulación", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop" }
-          ].map(member => (
+          {topMembers.map(member => (
             <div class="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.05)] text-left">
               <div class="h-64 relative">
-                <img src={member.img} alt={member.name} class="w-full h-full object-cover" />
+                <img src={member.imageUrl} alt={member.title} class="w-full h-full object-cover" />
                 <div class="absolute bottom-4 left-4 bg-[var(--color-gold)] text-black text-xs font-bold px-3 py-1">
                   {member.role}
                 </div>
               </div>
               <div class="p-6">
-                <h3 class="text-xl font-bold text-[var(--text-main)] mb-4">{member.name}</h3>
+                <h3 class="text-xl font-bold text-[var(--text-main)] mb-4">{member.title}</h3>
                 <div class="flex gap-3 text-[var(--color-primary)]">
                   <span>FB</span>
                   <span>TW</span>
