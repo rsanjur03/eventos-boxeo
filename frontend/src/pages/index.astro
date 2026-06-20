@@ -3,63 +3,63 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-  <main className="w-full overflow-hidden">
+  <main class="w-full overflow-hidden">
     
     {/* 1. Hero Section */}
-    <section className="relative h-[80vh] flex items-center bg-[#111]">
-      <div className="absolute inset-0 z-0">
+    <section class="relative h-[80vh] flex items-center bg-[#111]">
+      <div class="absolute inset-0 z-0">
         <img 
           src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=2000&auto=format&fit=crop" 
           alt="Boxing Headgear" 
-          className="w-full h-full object-cover opacity-40 grayscale"
+          class="w-full h-full object-cover opacity-40 grayscale"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent"></div>
       </div>
-      <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
-        <div className="max-w-2xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+      <div class="relative z-10 max-w-7xl mx-auto px-4 w-full">
+        <div class="max-w-2xl">
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
             Regulación y <br/> Supervisión del Boxeo <br/> Profesional
           </h1>
-          <p className="text-white/80 text-base md:text-lg mb-8 leading-relaxed">
+          <p class="text-white/80 text-base md:text-lg mb-8 leading-relaxed">
             En Comibox de Chiriquí, nos dedicamos a regular y supervisar el boxeo profesional. 
             Nuestro compromiso es proporcionar un ambiente seguro y profesional para todos los atletas implicados. 
             Garantizamos la seguridad de los boxeadores mediante la evaluación rigurosa de sus historiales y condiciones, 
             además de dirigir a árbitros y jueces para facilitar combates justos.
           </p>
-          <a href="/promotores" className="inline-block bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-bold py-3 px-8 rounded transition-colors">
+          <a href="/promotores" class="inline-block bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-bold py-3 px-8 rounded transition-colors">
             Contáctanos
           </a>
         </div>
       </div>
       {/* Decorative bottom curve/slant if needed, we'll keep it simple flat for now or use a clip-path */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none rotate-180 z-20">
-        <svg className="relative block w-full h-[50px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" className="fill-[var(--bg-light)]"></path>
+      <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none rotate-180 z-20">
+        <svg class="relative block w-full h-[50px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[var(--bg-light)]"></path>
         </svg>
       </div>
     </section>
 
     {/* 2. ¿Quiénes Somos? Section */}
-    <section className="py-20 bg-[var(--bg-light)]">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="rounded-2xl overflow-hidden shadow-xl h-[500px]">
-            <img src="https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=800&auto=format&fit=crop" alt="Boxing Ring" className="w-full h-full object-cover" />
+    <section class="py-20 bg-[var(--bg-light)]">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div class="rounded-2xl overflow-hidden shadow-xl h-[500px]">
+            <img src="https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=800&auto=format&fit=crop" alt="Boxing Ring" class="w-full h-full object-cover" />
           </div>
           <div>
-            <p className="text-[var(--color-primary)] font-bold mb-2">Nuestra Historia y Misión</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-main)] mb-6">¿Quiénes Somos?</h2>
-            <p className="text-[var(--text-muted)] mb-8 leading-relaxed">
+            <p class="text-[var(--color-primary)] font-bold mb-2">Nuestra Historia y Misión</p>
+            <h2 class="text-4xl md:text-5xl font-bold text-[var(--text-main)] mb-6">¿Quiénes Somos?</h2>
+            <p class="text-[var(--text-muted)] mb-8 leading-relaxed">
               Comibox de Chiriquí es la entidad encargada de regular el boxeo profesional, garantizando la seguridad y el desarrollo del deporte en nuestra región. Nuestro equipo apasionado trabaja para elevar la calidad y transparencia en cada evento.
             </p>
-            <div className="flex items-center gap-6 mb-8">
-              <div className="text-[var(--color-primary)] text-6xl font-black">
+            <div class="flex items-center gap-6 mb-8">
+              <div class="text-[var(--color-primary)] text-6xl font-black">
                 {/* Ribbon Icon SVG mock */}
                 <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.228l-4.35 2.287.83-4.842L4.96 9.25l4.86-.707L12 4.14l2.18 4.403 4.86.707-3.52 3.423.83 4.842z"/></svg>
               </div>
-              <span className="text-4xl font-bold text-[var(--color-primary)]">25+</span>
+              <span class="text-4xl font-bold text-[var(--color-primary)]">25+</span>
             </div>
-            <a href="/organizacion" className="inline-block bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-bold py-3 px-8 rounded transition-colors">
+            <a href="/organizacion" class="inline-block bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-bold py-3 px-8 rounded transition-colors">
               Más Información
             </a>
           </div>
@@ -68,14 +68,14 @@ import Layout from '../layouts/Layout.astro';
     </section>
 
     {/* 3. Servicios que Ofrecemos */}
-    <section className="py-20 bg-[var(--bg-light)]">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <p className="text-[var(--color-primary)] font-bold mb-2 inline-block border-t-2 border-[var(--color-primary)] pt-2">Servicios</p>
-          <h2 className="text-4xl font-bold text-[var(--text-main)]">Servicios que Ofrecemos</h2>
+    <section class="py-20 bg-[var(--bg-light)]">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+          <p class="text-[var(--color-primary)] font-bold mb-2 inline-block border-t-2 border-[var(--color-primary)] pt-2">Servicios</p>
+          <h2 class="text-4xl font-bold text-[var(--text-main)]">Servicios que Ofrecemos</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
             { title: "Autorización de Eventos", desc: "Nos encargamos de la autorización de combates y eventos relacionados con el boxeo profesional, asegurando normativas." },
             { title: "Evaluaciones Médicas", desc: "Coordinamos evaluaciones médicas exhaustivas para los boxeadores, asegurando condiciones óptimas." },
@@ -84,12 +84,12 @@ import Layout from '../layouts/Layout.astro';
             { title: "Transparencia en el Boxeo", desc: "Fomentamos un ambiente de boxeo profesional transparente y justo para participantes." },
             { title: "Formación y Capacitación", desc: "Desarrollamos programas de formación para árbitros y jueces, actualizados en mejores prácticas." }
           ].map(service => (
-            <div className="bg-white p-8 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:-translate-y-2 transition-transform duration-300">
-              <div className="text-[var(--color-primary)] text-4xl mb-6">
+            <div class="bg-white p-8 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:-translate-y-2 transition-transform duration-300">
+              <div class="text-[var(--color-primary)] text-4xl mb-6">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 16h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4z"/></svg>
               </div>
-              <h3 className="text-xl font-bold text-[var(--text-main)] mb-3">{service.title}</h3>
-              <p className="text-[var(--text-muted)] text-sm leading-relaxed">{service.desc}</p>
+              <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">{service.title}</h3>
+              <p class="text-[var(--text-muted)] text-sm leading-relaxed">{service.desc}</p>
             </div>
           ))}
         </div>
@@ -97,17 +97,17 @@ import Layout from '../layouts/Layout.astro';
     </section>
 
     {/* 4. Proceso de Regulación */}
-    <section className="py-20 bg-[var(--bg-light)]">
-      <div className="max-w-5xl mx-auto px-4 text-center">
-        <div className="mb-12 inline-block">
-          <div className="w-12 h-1 bg-[var(--color-primary)] mx-auto mb-4"></div>
-          <h2 className="text-4xl font-bold text-[var(--text-main)]">Proceso de Regulación</h2>
+    <section class="py-20 bg-[var(--bg-light)]">
+      <div class="max-w-5xl mx-auto px-4 text-center">
+        <div class="mb-12 inline-block">
+          <div class="w-12 h-1 bg-[var(--color-primary)] mx-auto mb-4"></div>
+          <h2 class="text-4xl font-bold text-[var(--text-main)]">Proceso de Regulación</h2>
         </div>
         
-        <div className="relative rounded-2xl overflow-hidden shadow-2xl h-[400px] md:h-[600px]">
-          <img src="https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=1200&auto=format&fit=crop" alt="Boxing Match" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-            <button className="w-20 h-20 bg-[var(--color-gold)] rounded-full flex items-center justify-center text-black shadow-xl hover:scale-110 transition-transform">
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl h-[400px] md:h-[600px]">
+          <img src="https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=1200&auto=format&fit=crop" alt="Boxing Match" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+            <button class="w-20 h-20 bg-[var(--color-gold)] rounded-full flex items-center justify-center text-black shadow-xl hover:scale-110 transition-transform">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </button>
           </div>
@@ -116,27 +116,27 @@ import Layout from '../layouts/Layout.astro';
     </section>
 
     {/* 5. Involúcrate Con Comibox */}
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 text-center">
-        <p className="text-[var(--color-primary)] font-bold mb-2 inline-block border-t-2 border-[var(--color-primary)] pt-2">Sé Parte del Crecimiento del Boxeo</p>
-        <h2 className="text-4xl font-bold text-[var(--text-main)] mb-16">Involúcrate Con Comibox</h2>
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-[var(--color-primary)] font-bold mb-2 inline-block border-t-2 border-[var(--color-primary)] pt-2">Sé Parte del Crecimiento del Boxeo</p>
+        <h2 class="text-4xl font-bold text-[var(--text-main)] mb-16">Involúcrate Con Comibox</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             { role: "Coordinador de Eventos", name: "Nuestro Equipo", img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop" },
             { role: "Asesor Médico", name: "Entrenador Principal", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" },
             { role: "Comunicación Social", name: "Especialista en Regulación", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop" }
           ].map(member => (
-            <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.05)] text-left">
-              <div className="h-64 relative">
-                <img src={member.img} alt={member.name} className="w-full h-full object-cover" />
-                <div className="absolute bottom-4 left-4 bg-[var(--color-gold)] text-black text-xs font-bold px-3 py-1">
+            <div class="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.05)] text-left">
+              <div class="h-64 relative">
+                <img src={member.img} alt={member.name} class="w-full h-full object-cover" />
+                <div class="absolute bottom-4 left-4 bg-[var(--color-gold)] text-black text-xs font-bold px-3 py-1">
                   {member.role}
                 </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-[var(--text-main)] mb-4">{member.name}</h3>
-                <div className="flex gap-3 text-[var(--color-primary)]">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-[var(--text-main)] mb-4">{member.name}</h3>
+                <div class="flex gap-3 text-[var(--color-primary)]">
                   <span>FB</span>
                   <span>TW</span>
                   <span>IN</span>
@@ -149,54 +149,54 @@ import Layout from '../layouts/Layout.astro';
     </section>
 
     {/* 6. Características */}
-    <section className="py-20 bg-[var(--bg-light)]">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section class="py-20 bg-[var(--bg-light)]">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <div className="w-12 h-1 bg-[var(--color-primary)] mb-4"></div>
-            <h2 className="text-4xl font-bold text-[var(--text-main)] mb-6">Características de Nuestros Servicios</h2>
-            <p className="text-[var(--text-muted)] mb-8">
+            <div class="w-12 h-1 bg-[var(--color-primary)] mb-4"></div>
+            <h2 class="text-4xl font-bold text-[var(--text-main)] mb-6">Características de Nuestros Servicios</h2>
+            <p class="text-[var(--text-muted)] mb-8">
               Nuestras características únicas aseguran que los servicios proporcionados no solo beneficien a los boxeadores, sino también a las comunidades y organizadores.
             </p>
             
-            <ul className="space-y-4 mb-8">
+            <ul class="space-y-4 mb-8">
               {[
                 "Nuestra principal prioridad es la seguridad de los boxeadores y la integridad de cada evento.",
                 "Mantenemos operaciones completamente transparentes en la autorización y control de eventos.",
                 "Brindamos apoyo continuo a los boxeadores y sus entrenadores en sus trayectorias deportivas.",
                 "Trabajamos con promotores y entes deportivos para llevar el boxeo a nuevos niveles."
               ].map(text => (
-                <li className="flex items-start gap-3">
-                  <div className="min-w-[24px] mt-1 text-[var(--color-gold)]">
+                <li class="flex items-start gap-3">
+                  <div class="min-w-[24px] mt-1 text-[var(--color-gold)]">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M10 15l-3-3 1.4-1.4 1.6 1.6 4.6-4.6L16 9l-6 6z" fill="white"/></svg>
                   </div>
-                  <span className="text-[var(--text-main)] font-medium text-sm leading-relaxed">{text}</span>
+                  <span class="text-[var(--text-main)] font-medium text-sm leading-relaxed">{text}</span>
                 </li>
               ))}
             </ul>
-            <a href="/servicios" className="inline-block bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-bold py-3 px-8 rounded transition-colors">
+            <a href="/servicios" class="inline-block bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-bold py-3 px-8 rounded transition-colors">
               Más Información
             </a>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="space-y-6">
-              <div className="bg-white p-8 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] text-center">
-                <div className="text-[var(--color-primary)] text-4xl mb-4 flex justify-center">📈</div>
-                <h3 className="font-bold text-[var(--text-main)] mb-2">Seguridad Ante Todo</h3>
-                <p className="text-[var(--text-muted)] text-xs">Nuestra principal prioridad es la seguridad e integridad de cada evento.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="space-y-6">
+              <div class="bg-white p-8 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] text-center">
+                <div class="text-[var(--color-primary)] text-4xl mb-4 flex justify-center">📈</div>
+                <h3 class="font-bold text-[var(--text-main)] mb-2">Seguridad Ante Todo</h3>
+                <p class="text-[var(--text-muted)] text-xs">Nuestra principal prioridad es la seguridad e integridad de cada evento.</p>
               </div>
-              <div className="bg-white p-8 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] text-center">
-                <div className="text-[var(--color-primary)] text-4xl mb-4 flex justify-center">👥</div>
-                <h3 className="font-bold text-[var(--text-main)] mb-2">Transparencia Operativa</h3>
-                <p className="text-[var(--text-muted)] text-xs">Mantenemos operaciones transparentes en control de eventos.</p>
+              <div class="bg-white p-8 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] text-center">
+                <div class="text-[var(--color-primary)] text-4xl mb-4 flex justify-center">👥</div>
+                <h3 class="font-bold text-[var(--text-main)] mb-2">Transparencia Operativa</h3>
+                <p class="text-[var(--text-muted)] text-xs">Mantenemos operaciones transparentes en control de eventos.</p>
               </div>
             </div>
-            <div className="pt-12">
-              <div className="bg-white p-8 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] text-center">
-                <div className="text-[var(--color-primary)] text-4xl mb-4 flex justify-center">📊</div>
-                <h3 className="font-bold text-[var(--text-main)] mb-2">Soporte Continuo</h3>
-                <p className="text-[var(--text-muted)] text-xs">Apoyo continuo a boxeadores y entrenadores deportivos.</p>
+            <div class="pt-12">
+              <div class="bg-white p-8 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] text-center">
+                <div class="text-[var(--color-primary)] text-4xl mb-4 flex justify-center">📊</div>
+                <h3 class="font-bold text-[var(--text-main)] mb-2">Soporte Continuo</h3>
+                <p class="text-[var(--text-muted)] text-xs">Apoyo continuo a boxeadores y entrenadores deportivos.</p>
               </div>
             </div>
           </div>

@@ -45,106 +45,106 @@ const boxer = boxerData[id as keyof typeof boxerData] || boxerData['luis-concepc
 ---
 
 <Layout>
-  <main className="min-h-screen bg-[var(--bg-dark)] py-12 px-4">
-    <div className="max-w-6xl mx-auto">
+  <main class="min-h-screen bg-[var(--bg-light)] py-12 px-4">
+    <div class="max-w-6xl mx-auto">
       
       {/* Header */}
-      <div className="text-center mb-10">
-        <h1 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight">
-          <span className="text-[var(--color-primary)]">#{boxer.idNum}</span> {boxer.name}
+      <div class="text-center mb-10">
+        <h1 class="text-4xl md:text-5xl font-black text-[var(--text-main)] uppercase tracking-tight">
+          <span class="text-[var(--color-primary)]">#{boxer.idNum}</span> {boxer.name}
         </h1>
-        <p className="text-[var(--color-gold)] font-bold text-xl uppercase mt-2">box-pro</p>
-        <div className="h-1 w-full max-w-2xl mx-auto bg-white/10 mt-4 relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-red-600"></div>
+        <p class="text-[var(--color-gold)] font-bold text-xl uppercase mt-2">box-pro</p>
+        <div class="h-1 w-full max-w-2xl mx-auto bg-gray-200 mt-4 relative">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-red-600"></div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
         
         {/* Left Column: Image & Score */}
-        <div className="md:col-span-4">
+        <div class="md:col-span-4">
           {/* Score Header */}
-          <div className="flex text-center text-white font-black text-3xl mb-1">
-            <div className="flex-1 bg-green-700 py-2 rounded-tl-lg">{boxer.stats.wins}</div>
-            <div className="flex-1 bg-red-700 py-2">{boxer.stats.losses}</div>
-            <div className="flex-1 bg-blue-500 py-2 rounded-tr-lg">{boxer.stats.draws}</div>
+          <div class="flex text-center text-white font-black text-3xl mb-1">
+            <div class="flex-1 bg-green-700 py-2 rounded-tl-lg">{boxer.stats.wins}</div>
+            <div class="flex-1 bg-red-700 py-2">{boxer.stats.losses}</div>
+            <div class="flex-1 bg-blue-500 py-2 rounded-tr-lg">{boxer.stats.draws}</div>
           </div>
-          <div className="flex text-center text-xs font-bold uppercase mb-4">
-            <div className="flex-1 text-green-500">{boxer.stats.kos} KOs</div>
-            <div className="flex-1 text-red-500"></div>
-            <div className="flex-1 text-blue-500"></div>
+          <div class="flex text-center text-xs font-bold uppercase mb-4">
+            <div class="flex-1 text-green-500">{boxer.stats.kos} KOs</div>
+            <div class="flex-1 text-red-500"></div>
+            <div class="flex-1 text-blue-500"></div>
           </div>
 
-          <div className="rounded-xl overflow-hidden glassmorphism p-2">
-            <img src={boxer.imageUrl} alt={boxer.name} className="w-full h-auto rounded-lg grayscale" />
+          <div class="rounded-xl overflow-hidden bg-white shadow-lg border border-gray-100 p-2">
+            <img src={boxer.imageUrl} alt={boxer.name} class="w-full h-auto rounded-lg grayscale" />
           </div>
         </div>
 
         {/* Right Column: Details */}
-        <div className="md:col-span-8 glassmorphism rounded-2xl p-6 md:p-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm md:text-base">
+        <div class="md:col-span-8 bg-white shadow-lg border border-gray-100 rounded-2xl p-6 md:p-10">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm md:text-base">
             
             {/* Column 1 */}
-            <div className="space-y-3">
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">division</span>
-                <span className="w-2/3 text-white">{boxer.division}</span>
+            <div class="space-y-3">
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">division</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.division}</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">bouts</span>
-                <span className="w-2/3 text-white">{boxer.bouts}</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">bouts</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.bouts}</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">rounds</span>
-                <span className="w-2/3 text-white">{boxer.rounds}</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">rounds</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.rounds}</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">KOs</span>
-                <span className="w-2/3 text-white">{boxer.koPercentage}</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">KOs</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.koPercentage}</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">career</span>
-                <span className="w-2/3 text-white">{boxer.career}</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">career</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.career}</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">debut</span>
-                <span className="w-2/3 text-white">{boxer.debut}</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">debut</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.debut}</span>
               </div>
             </div>
 
             {/* Column 2 */}
-            <div className="space-y-3">
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--color-primary)] font-semibold">ID#</span>
-                <span className="w-2/3 text-[var(--color-primary)]">{boxer.idNum}</span>
+            <div class="space-y-3">
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--color-primary)] font-semibold">ID#</span>
+                <span class="w-2/3 text-[var(--color-primary)]">{boxer.idNum}</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">birth name</span>
-                <span className="w-2/3 text-white">{boxer.birthName}</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">birth name</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.birthName}</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">alias</span>
-                <span className="w-2/3 text-white">"{boxer.alias}"</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">alias</span>
+                <span class="w-2/3 text-[var(--text-main)]">"{boxer.alias}"</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">age</span>
-                <span className="w-2/3 text-white">{boxer.age}</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">age</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.age}</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">nationality</span>
-                <span className="w-2/3 text-white">{boxer.nationality}</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">nationality</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.nationality}</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">stance</span>
-                <span className="w-2/3 text-white">{boxer.stance}</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">stance</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.stance}</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">height</span>
-                <span className="w-2/3 text-white">{boxer.height}</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">height</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.height}</span>
               </div>
-              <div className="flex border-b border-white/10 pb-2">
-                <span className="w-1/3 text-[var(--text-muted)] font-semibold">reach</span>
-                <span className="w-2/3 text-white">{boxer.reach}</span>
+              <div class="flex border-b border-gray-100 pb-2">
+                <span class="w-1/3 text-[var(--text-muted)] font-semibold">reach</span>
+                <span class="w-2/3 text-[var(--text-main)]">{boxer.reach}</span>
               </div>
             </div>
 
@@ -153,31 +153,31 @@ const boxer = boxerData[id as keyof typeof boxerData] || boxerData['luis-concepc
       </div>
 
       {/* Fight History Table */}
-      <div className="mt-16">
-        <h3 className="text-2xl font-bold text-center text-white mb-6 uppercase">Pro Boxing {boxer.bouts} Bouts</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-white">
-            <thead className="bg-white/5 uppercase text-[var(--text-muted)]">
+      <div class="mt-16">
+        <h3 class="text-2xl font-bold text-center text-[var(--text-main)] mb-6 uppercase">Pro Boxing {boxer.bouts} Bouts</h3>
+        <div class="overflow-x-auto bg-white shadow-xl rounded-xl">
+          <table class="w-full text-left text-sm text-[var(--text-main)]">
+            <thead class="bg-gray-100 uppercase text-[var(--text-muted)]">
               <tr>
-                <th className="px-4 py-3 rounded-tl-lg">Date</th>
-                <th className="px-4 py-3">Opponent</th>
-                <th className="px-4 py-3">W-L-D</th>
-                <th className="px-4 py-3 text-center">Result</th>
-                <th className="px-4 py-3 rounded-tr-lg">Venue</th>
+                <th class="px-4 py-3 rounded-tl-lg">Date</th>
+                <th class="px-4 py-3">Opponent</th>
+                <th class="px-4 py-3">W-L-D</th>
+                <th class="px-4 py-3 text-center">Result</th>
+                <th class="px-4 py-3 rounded-tr-lg">Venue</th>
               </tr>
             </thead>
             <tbody>
               {boxer.fights.map((fight, idx) => (
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="px-4 py-4">{fight.date}</td>
-                  <td className="px-4 py-4 font-bold">{fight.opponent}</td>
-                  <td className="px-4 py-4 text-[var(--text-muted)]">{fight.oppRecord}</td>
-                  <td className="px-4 py-4 text-center">
-                    <span className={`inline-block px-3 py-1 font-bold rounded ${fight.result === 'W' ? 'bg-green-700' : 'bg-red-700'}`}>
+                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                  <td class="px-4 py-4">{fight.date}</td>
+                  <td class="px-4 py-4 font-bold">{fight.opponent}</td>
+                  <td class="px-4 py-4 text-[var(--text-muted)]">{fight.oppRecord}</td>
+                  <td class="px-4 py-4 text-center">
+                    <span class={`inline-block text-white px-3 py-1 font-bold rounded ${fight.result === 'W' ? 'bg-green-700' : 'bg-red-700'}`}>
                       {fight.result}
                     </span>
                   </td>
-                  <td className="px-4 py-4 text-[var(--text-muted)]">{fight.venue}</td>
+                  <td class="px-4 py-4 text-[var(--text-muted)]">{fight.venue}</td>
                 </tr>
               ))}
             </tbody>

@@ -31,37 +31,37 @@ const boardMembers = [
 ---
 
 <Layout>
-  <main className="min-h-screen bg-[var(--bg-dark)] py-12 px-4">
+  <main class="min-h-screen bg-[var(--bg-light)] py-12 px-4">
     
-    <div className="max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto">
       {/* Header */}
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-4">
-          Nuestra <span className="text-[var(--color-primary)]">Organización</span>
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-black text-[var(--text-main)] uppercase tracking-tight mb-4">
+          Nuestra <span class="text-[var(--color-primary)]">Organización</span>
         </h1>
-        <p className="text-lg text-[var(--text-muted)] max-w-3xl mx-auto">
+        <p class="text-lg text-[var(--text-muted)] max-w-3xl mx-auto">
           Conoce a la junta directiva de la COMIBOX Chiriquí. Un equipo multidisciplinario trabajando de manera voluntaria por el futuro del deporte y nuestros jóvenes.
         </p>
       </div>
 
       {/* Board Members Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {boardMembers.map((member) => (
-          <div key={member.id} className="glassmorphism rounded-2xl overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
-            <div className="h-64 overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent z-10"></div>
+          <div key={member.id} class="bg-[var(--bg-card)] shadow-[0_4px_20px_rgba(0,0,0,0.05)] rounded-2xl overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+            <div class="h-64 overflow-hidden relative">
+              <div class="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent z-10"></div>
               <img 
                 src={member.imageUrl} 
                 alt={member.title} 
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 grayscale"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0"
               />
             </div>
-            <div className="p-6 relative z-20 -mt-12">
-              <span className="inline-block px-3 py-1 bg-[var(--color-gold)] text-black text-xs font-bold uppercase tracking-wider rounded mb-3">
+            <div class="p-6 relative z-20 -mt-12 bg-white rounded-t-2xl shadow-[0_-10px_20px_rgba(255,255,255,1)]">
+              <span class="inline-block px-3 py-1 bg-[var(--color-gold)] text-black text-xs font-bold uppercase tracking-wider rounded mb-3">
                 {member.role}
               </span>
-              <h3 className="text-2xl font-bold text-white mb-2">{member.title}</h3>
-              <p className="text-[var(--text-muted)] text-sm leading-relaxed">
+              <h3 class="text-2xl font-bold text-[var(--text-main)] mb-2">{member.title}</h3>
+              <p class="text-[var(--text-muted)] text-sm leading-relaxed">
                 {member.bio}
               </p>
             </div>
@@ -70,10 +70,10 @@ const boardMembers = [
       </div>
 
       {/* History Section */}
-      <div className="mt-24 glassmorphism p-8 md:p-12 rounded-2xl border-t-4 border-[var(--color-gold)]">
-        <h2 className="text-3xl font-bold text-white mb-6 uppercase">Nuestra Historia</h2>
-        <div className="prose prose-invert max-w-none text-[var(--text-muted)]">
-          <p className="mb-4">
+      <div class="mt-24 bg-[var(--bg-card)] shadow-xl p-8 md:p-12 rounded-2xl border-t-4 border-[var(--color-gold)]">
+        <h2 class="text-3xl font-bold text-[var(--text-main)] mb-6 uppercase">Nuestra Historia</h2>
+        <div class="prose max-w-none text-[var(--text-muted)]">
+          <p class="mb-4">
             La Comisión de Boxeo de Chiriquí fue fundada con el propósito de regular, promover y salvaguardar la integridad de los boxeadores en nuestra provincia. A lo largo de los años, hemos supervisado decenas de eventos, asegurando que se cumplan estrictamente las normativas médicas y deportivas.
           </p>
           <p>
