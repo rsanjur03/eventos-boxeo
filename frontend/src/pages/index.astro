@@ -5,10 +5,14 @@ import Layout from '../layouts/Layout.astro';
 let teamMembers = [];
 try {
   const apiUrl = import.meta.env.SONICJS_API_URL || 'https://api.comiboxchiriqui.com';
-  const res = await fetch(`${apiUrl}/v1/content/board-members`);
+  const res = await fetch(`${apiUrl}/api/content?collection=board_member`);
   if (res.ok) {
     const data = await res.json();
-    teamMembers = data.data || [];
+    teamMembers = (data.data || []).map((item: any) => ({
+      title: item.data.title,
+      role: item.data.role,
+      imageUrl: item.data.imageUrl ? `${apiUrl}${item.data.imageUrl}` : 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop'
+    }));
   }
 } catch (error) {
   console.error('Error connecting to SonicJS on home page:', error);

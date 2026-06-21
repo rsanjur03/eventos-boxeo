@@ -61,8 +61,8 @@ export default {
         title: 'Manager',
       },
       imageUrl: {
-        type: 'media',
-        title: 'Image',
+        type: 'string',
+        title: 'Image URL',
       },
     },
     required: ['title'],

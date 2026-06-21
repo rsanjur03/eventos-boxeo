@@ -9,19 +9,14 @@ workers_dev = true
 # D1 Database
 [[d1_databases]]
 binding = "DB"
-database_name = "eventos-boxeo-backend-v2"
-database_id = "a306ae26-5f32-47a2-97e6-6886b9f46bcc"
-migrations_dir = "./migrations"
+database_name = "eventos-boxeo-backend"
+database_id = "05166ffb-f486-4407-b16d-5989655f2280" # Run: wrangler d1 create my-sonicjs-db
+migrations_dir = "./node_modules/@sonicjs-cms/core/migrations"
 
 # R2 Bucket for media storage
 [[r2_buckets]]
 binding = "MEDIA_BUCKET"
 bucket_name = "eventos-comiboxch-media"
-
-# KV Cache
-[[kv_namespaces]]
-binding = "CACHE_KV"
-id = "11690a5cff5447d493e63283b3e4eea5"
 
 # Environment variables
 [vars]

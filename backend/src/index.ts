@@ -4,21 +4,21 @@
  * Entry point for your SonicJS headless CMS application
  */
 
+import { Hono } from 'hono'
 import { createSonicJSApp, registerCollections } from '@sonicjs-cms/core'
 import type { SonicJSConfig } from '@sonicjs-cms/core'
 
-// Import your collection configurations
-// Add new collections here after creating them in src/collections/
-import blogPostsCollection from './collections/blog-posts.collection'
+// Import custom collections
 import boardMembersCollection from './collections/board-members.collection'
 import boxersCollection from './collections/boxers.collection'
 import eventsCollection from './collections/events.collection'
 import fightsCollection from './collections/fights.collection'
 
-// Register collections BEFORE creating the app
-// This ensures they are synced to the database on startup
+// Import plugins (manual mounting until auto-loading is implemented)
+import contactFormPlugin from './plugins/contact-form/index'
+
+// Register all custom collections
 registerCollections([
-  blogPostsCollection,
   boardMembersCollection,
   boxersCollection,
   eventsCollection,
@@ -32,9 +32,27 @@ const config: SonicJSConfig = {
   },
   plugins: {
     directory: './src/plugins',
-    autoLoad: false  // Set to true to auto-load custom plugins
+    autoLoad: false,  // Set to true to auto-load custom plugins
+    disableAll: false,  // Enable plugins
+    enabled: ['email', 'contact-form']  // Enable specific plugins
   }
 }
 
-// Create and export the application
-export default createSonicJSApp(config)
+// Create the core application
+const coreApp = createSonicJSApp(config)
+
+// Create main app and mount plugin routes manually
+// (Plugin auto-mounting not yet implemented in core)
+const app = new Hono()
+
+// Mount plugin routes
+if (contactFormPlugin.routes) {
+  for (const route of contactFormPlugin.routes) {
+    app.route(route.path, route.handler)
+  }
+}
+
+// Mount core app last (catch-all)
+app.route('/', coreApp)
+
+export default app

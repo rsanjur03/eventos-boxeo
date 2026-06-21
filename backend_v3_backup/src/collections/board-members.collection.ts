@@ -26,8 +26,8 @@ export default {
         title: 'Biography',
       },
       imageUrl: {
-        type: 'media',
-        title: 'Image',
+        type: 'string',
+        title: 'Image URL',
       }
     },
     required: ['title', 'role'],
