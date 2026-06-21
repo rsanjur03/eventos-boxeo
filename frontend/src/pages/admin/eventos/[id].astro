@@ -28,7 +28,7 @@ if (Astro.request.method === 'POST') {
       result: 'Pendiente'
     };
 
-    const res = await fetch(`${apiUrl}/api/content/fight`, {
+    const res = await fetch(`${apiUrl}/api/unsecured/content/fight`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(fightData)
