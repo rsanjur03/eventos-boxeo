@@ -13,6 +13,7 @@ import boardMembersCollection from './collections/board-members.collection'
 import boxersCollection from './collections/boxers.collection'
 import eventsCollection from './collections/events.collection'
 import fightsCollection from './collections/fights.collection'
+import officialCollection from './collections/officials.collection'
 
 // Import plugins (manual mounting until auto-loading is implemented)
 import contactFormPlugin from './plugins/contact-form/index'
@@ -22,7 +23,8 @@ registerCollections([
   boardMembersCollection,
   boxersCollection,
   eventsCollection,
-  fightsCollection
+  fightsCollection,
+  officialCollection
 ])
 
 // Application configuration

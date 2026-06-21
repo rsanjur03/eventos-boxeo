@@ -9,16 +9,31 @@ if (Astro.request.method === 'POST') {
     const data = await Astro.request.formData();
     const title = data.get('title');
     const dob = data.get('dob');
-    const isReferee = data.get('isReferee') === 'on';
-    const isJudge = data.get('isJudge') === 'on';
-    const isTimekeeper = data.get('isTimekeeper') === 'on';
     
+    const roles = [];
+    if (data.get('isReferee') === 'on') roles.push('Árbitro');
+    if (data.get('isJudge') === 'on') roles.push('Juez');
+    if (data.get('isTimekeeper') === 'on') roles.push('Juez de Tiempo');
+
+    const idNum = data.get('idNum');
+    const phone = data.get('phone');
+    const sex = data.get('sex');
+    const bloodType = data.get('bloodType');
+    const address = data.get('address');
+    const startYear = data.get('startYear');
+    const hasLicense = data.get('hasLicense') === 'on';
+
     const officialData = {
       title,
       dob,
-      isReferee,
-      isJudge,
-      isTimekeeper
+      roles,
+      idNum,
+      phone,
+      sex,
+      bloodType,
+      address,
+      startYear,
+      hasLicense
     };
 
     const res = await fetch(`${apiUrl}/api/unsecured/content/official`, {
@@ -70,11 +85,14 @@ const getAge = (dobString: string) => {
 
 // Helper to format roles
 const getRolesStr = (official: any) => {
-  const roles = [];
-  if (official.data.isReferee) roles.push('Árbitro');
-  if (official.data.isJudge) roles.push('Juez');
-  if (official.data.isTimekeeper) roles.push('Juez de Tiempo');
-  return roles.join(', ') || 'Sin rol asignado';
+  const roles = official.data.roles || [];
+  if (roles.length > 0) return roles.join(', ');
+  // Backwards compatibility with the old boolean format just in case
+  const oldRoles = [];
+  if (official.data.isReferee) oldRoles.push('Árbitro');
+  if (official.data.isJudge) oldRoles.push('Juez');
+  if (official.data.isTimekeeper) oldRoles.push('Juez de Tiempo');
+  return oldRoles.join(', ') || 'Sin rol asignado';
 };
 ---
 
@@ -133,9 +151,45 @@ const getRolesStr = (official: any) => {
             <input type="text" name="title" required class="w-full border border-gray-300 rounded p-2" />
           </div>
 
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Cédula</label>
+              <input type="text" name="idNum" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Celular</label>
+              <input type="text" name="phone" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Fecha Nacimiento</label>
+              <input type="date" name="dob" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Sexo</label>
+              <select name="sex" class="w-full border border-gray-300 rounded p-2 bg-white">
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Tipo Sangre</label>
+              <input type="text" name="bloodType" placeholder="Ej. O+" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Año Inicio</label>
+              <input type="number" name="startYear" placeholder="Ej. 2000" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+          </div>
+
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">Fecha de Nacimiento</label>
-            <input type="date" name="dob" class="w-full border border-gray-300 rounded p-2" />
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Dirección</label>
+            <input type="text" name="address" class="w-full border border-gray-300 rounded p-2" />
           </div>
 
           <div class="pt-2">
@@ -154,6 +208,13 @@ const getRolesStr = (official: any) => {
                 <span class="text-gray-700 font-semibold">Juez de Tiempo</span>
               </label>
             </div>
+          </div>
+
+          <div class="pt-2 border-t mt-4">
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" name="hasLicense" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+              <span class="text-gray-700 font-bold">Tiene Carnet Vigente</span>
+            </label>
           </div>
 
           <p class="text-xs text-gray-500 mt-2">
