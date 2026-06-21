@@ -1,0 +1,76 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+
+// Fetch summary metrics
+let stats = {
+  totalRevenue: 0,
+  vipSeatsRemaining: 0,
+  generalSeatsRemaining: 0,
+  activeEvents: 0
+};
+
+try {
+  const apiUrl = import.meta.env.SONICJS_API_URL || 'https://api.comiboxchiriqui.com';
+  
+  // These would ideally be fetched from actual aggregations in the API
+  // For now we mock the aggregations until the endpoints are fully populated
+  stats = {
+    totalRevenue: 12500, // example
+    vipSeatsRemaining: 45,
+    generalSeatsRemaining: 320,
+    activeEvents: 1
+  };
+} catch (error) {
+  console.error('Error fetching admin stats', error);
+}
+---
+
+<AdminLayout title="Dashboard">
+  
+  {/* KPI Cards */}
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <p class="text-sm text-gray-500 font-semibold uppercase">Dinero Recaudado</p>
+      <p class="text-3xl font-black text-green-600 mt-2">${stats.totalRevenue.toLocaleString()}</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <p class="text-sm text-gray-500 font-semibold uppercase">Sillas VIP (Restantes)</p>
+      <p class="text-3xl font-black text-gray-800 mt-2">{stats.vipSeatsRemaining}</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <p class="text-sm text-gray-500 font-semibold uppercase">Entrada General (Rest.)</p>
+      <p class="text-3xl font-black text-gray-800 mt-2">{stats.generalSeatsRemaining}</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <p class="text-sm text-gray-500 font-semibold uppercase">Eventos Activos</p>
+      <p class="text-3xl font-black text-blue-600 mt-2">{stats.activeEvents}</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {/* Recent Sales */}
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">Ventas Recientes (Yappy)</h3>
+      <div class="text-sm text-gray-500 text-center py-8">
+        No hay ventas registradas aún.
+      </div>
+    </div>
+
+    {/* Quick Actions */}
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">Acciones Rápidas</h3>
+      <div class="space-y-3">
+        <a href="/admin/taquilla" class="block w-full py-3 px-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg text-gray-700 font-semibold transition text-center">
+          Crear Libreta de Boletos (Patrocinadores)
+        </a>
+        <a href="/admin/carteleras" class="block w-full py-3 px-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg text-gray-700 font-semibold transition text-center">
+          Registrar Nueva Pelea
+        </a>
+        <a href="/admin/contabilidad" class="block w-full py-3 px-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg text-gray-700 font-semibold transition text-center">
+          Agregar Gasto Operativo
+        </a>
+      </div>
+    </div>
+  </div>
+
+</AdminLayout>

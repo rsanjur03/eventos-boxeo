@@ -1,0 +1,79 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+
+// Fetch booklets
+let booklets = [];
+try {
+  const apiUrl = import.meta.env.SONICJS_API_URL || 'https://api.comiboxchiriqui.com';
+  const res = await fetch(`${apiUrl}/api/content?collection=ticket_booklet`);
+  if (res.ok) {
+    const data = await res.json();
+    booklets = data.data || [];
+  }
+} catch (error) {
+  console.error('Error fetching booklets:', error);
+}
+---
+
+<AdminLayout title="Taquilla & Libretas">
+  
+  <div class="mb-8 flex justify-between items-center">
+    <p class="text-gray-600">Administra las ventas, cortesías y libretas asignadas a promotores.</p>
+    <button class="bg-[var(--color-primary)] text-black font-bold px-6 py-2 rounded-lg shadow hover:bg-yellow-400 transition">
+      + Nueva Libreta
+    </button>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="p-6 border-b border-gray-100">
+      <h3 class="text-lg font-bold text-gray-800">Libretas Activas</h3>
+    </div>
+    
+    {booklets.length === 0 ? (
+      <div class="p-8 text-center text-gray-500">
+        No hay libretas registradas. Haz clic en "Nueva Libreta" para crear una.
+      </div>
+    ) : (
+      <table class="w-full text-left text-sm">
+        <thead class="bg-gray-50 text-gray-500 uppercase">
+          <tr>
+            <th class="px-6 py-3">Serie / ID</th>
+            <th class="px-6 py-3">Asignado a</th>
+            <th class="px-6 py-3">Tipo</th>
+            <th class="px-6 py-3">Cantidad</th>
+            <th class="px-6 py-3 text-right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          {booklets.map((b: any) => (
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 font-semibold">{b.data.title}</td>
+              <td class="px-6 py-4">{b.data.assignedTo}</td>
+              <td class="px-6 py-4">
+                <span class={`px-2 py-1 text-xs rounded-full font-bold ${b.data.type === 'Cortesia' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}`}>
+                  {b.data.type}
+                </span>
+              </td>
+              <td class="px-6 py-4">{b.data.ticketsCount}</td>
+              <td class="px-6 py-4 text-right">
+                <button class="text-blue-600 hover:underline">Editar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </div>
+
+  {/* Ticket Sales Table */}
+  <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+      <h3 class="text-lg font-bold text-gray-800">Ventas Individuales Registradas</h3>
+      <button class="text-sm font-semibold text-blue-600 hover:underline">Ver todas</button>
+    </div>
+    <div class="p-8 text-center text-gray-500">
+      Aquí aparecerán las compras realizadas mediante Yappy y pagos manuales.
+    </div>
+  </div>
+
+</AdminLayout>

@@ -1,0 +1,88 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+
+// Fetch accounting records
+let records = [];
+try {
+  const apiUrl = import.meta.env.SONICJS_API_URL || 'https://api.comiboxchiriqui.com';
+  const res = await fetch(`${apiUrl}/api/content?collection=accounting`);
+  if (res.ok) {
+    const data = await res.json();
+    records = data.data || [];
+  }
+} catch (error) {
+  console.error('Error fetching accounting records:', error);
+}
+
+// Calculate totals
+const totalIngresos = records.filter((r: any) => r.data.type === 'Ingreso').reduce((sum: number, r: any) => sum + (Number(r.data.amount) || 0), 0);
+const totalEgresos = records.filter((r: any) => r.data.type === 'Gasto').reduce((sum: number, r: any) => sum + (Number(r.data.amount) || 0), 0);
+const balance = totalIngresos - totalEgresos;
+---
+
+<AdminLayout title="Contabilidad del Evento">
+  
+  <div class="mb-8 flex justify-between items-center">
+    <p class="text-gray-600">Libro mayor de ingresos y gastos operativos.</p>
+    <button class="bg-gray-900 text-white font-bold px-6 py-2 rounded-lg shadow hover:bg-gray-800 transition">
+      + Registrar Movimiento
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <p class="text-sm text-gray-500 font-semibold uppercase">Total Ingresos</p>
+      <p class="text-3xl font-black text-green-600 mt-2">${totalIngresos.toLocaleString()}</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <p class="text-sm text-gray-500 font-semibold uppercase">Total Egresos (Gastos)</p>
+      <p class="text-3xl font-black text-red-600 mt-2">${totalEgresos.toLocaleString()}</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <p class="text-sm text-gray-500 font-semibold uppercase">Balance Neto</p>
+      <p class={`text-3xl font-black mt-2 ${balance >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
+        ${balance.toLocaleString()}
+      </p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="p-6 border-b border-gray-100">
+      <h3 class="text-lg font-bold text-gray-800">Historial de Movimientos</h3>
+    </div>
+    
+    {records.length === 0 ? (
+      <div class="p-8 text-center text-gray-500">
+        No hay registros financieros. Haz clic en "Registrar Movimiento" para agregar un gasto o ingreso.
+      </div>
+    ) : (
+      <table class="w-full text-left text-sm">
+        <thead class="bg-gray-50 text-gray-500 uppercase">
+          <tr>
+            <th class="px-6 py-3">Descripción</th>
+            <th class="px-6 py-3">Categoría</th>
+            <th class="px-6 py-3">Tipo</th>
+            <th class="px-6 py-3 text-right">Monto</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          {records.map((r: any) => (
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 font-semibold text-gray-800">{r.data.title}</td>
+              <td class="px-6 py-4 text-gray-600">{r.data.category}</td>
+              <td class="px-6 py-4">
+                <span class={`px-2 py-1 text-xs rounded-full font-bold ${r.data.type === 'Ingreso' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                  {r.data.type}
+                </span>
+              </td>
+              <td class={`px-6 py-4 text-right font-bold ${r.data.type === 'Ingreso' ? 'text-green-600' : 'text-red-600'}`}>
+                {r.data.type === 'Ingreso' ? '+' : '-'}${Number(r.data.amount || 0).toLocaleString()}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </div>
+
+</AdminLayout>
