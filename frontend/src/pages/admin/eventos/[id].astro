@@ -37,7 +37,8 @@ if (Astro.request.method === 'POST') {
     if (res.ok) {
       actionMessage = 'Pelea creada exitosamente.';
     } else {
-      actionMessage = 'Error al crear la pelea en la base de datos.';
+      let errText = await res.text();
+      actionMessage = `Error al crear la pelea en la base de datos: ${errText}`;
     }
   } catch (error) {
     console.error(error);
@@ -52,8 +53,11 @@ let boxers = [];
 
 try {
   // 1. Fetch Event
-  const evRes = await fetch(`${apiUrl}/api/content/event/${id}`);
-  if (evRes.ok) event = await evRes.json();
+  const evRes = await fetch(`${apiUrl}/api/content/${id}`);
+  if (evRes.ok) {
+    const data = await evRes.json();
+    event = data.data || data; // handle if wrapped in {data: ...}
+  }
 
   // 2. Fetch all fights
   // Note: Since SonicJS might not support complex filtering via REST easily, we filter here for now

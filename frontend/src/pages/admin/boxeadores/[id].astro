@@ -8,9 +8,10 @@ let actionMessage = '';
 // Fetch boxer details
 let boxer = null;
 try {
-  const res = await fetch(`${apiUrl}/api/content/boxer/${id}`);
+  const res = await fetch(`${apiUrl}/api/content/${id}`);
   if (res.ok) {
-    boxer = await res.json();
+    const data = await res.json();
+    boxer = data.data || data; // handle if wrapped in {data: ...}
   }
 } catch (e) {
   console.error('Error fetching boxer:', e);
@@ -89,7 +90,8 @@ if (Astro.request.method === 'POST') {
         boxer.data.kos = kos;
         boxer.data.kos_lost = kos_lost;
       } else {
-        actionMessage = 'Error al guardar el historial.';
+        let errText = await res.text();
+        actionMessage = `Error al guardar el historial: ${errText}`;
       }
     }
   } catch (error) {
