@@ -1,0 +1,174 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+const apiUrl = import.meta.env.SONICJS_API_URL || 'https://api.comiboxchiriqui.com';
+let actionMessage = '';
+
+if (Astro.request.method === 'POST') {
+  try {
+    const data = await Astro.request.formData();
+    const title = data.get('title');
+    const alias = data.get('alias');
+    const nationality = data.get('nationality');
+    const weight = data.get('weight');
+    const stance = data.get('stance');
+    const wins = Number(data.get('wins') || 0);
+    const losses = Number(data.get('losses') || 0);
+    const draws = Number(data.get('draws') || 0);
+    const kos = Number(data.get('kos') || 0);
+    
+    const boxerData = {
+      title,
+      alias,
+      nationality,
+      weight,
+      stance,
+      wins,
+      losses,
+      draws,
+      kos
+    };
+
+    const res = await fetch(`${apiUrl}/api/content/boxers`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(boxerData)
+    });
+
+    if (res.ok) {
+      actionMessage = 'Boxeador creado exitosamente.';
+    } else {
+      actionMessage = 'Error al crear el boxeador.';
+    }
+  } catch (error) {
+    console.error(error);
+    actionMessage = 'Error al procesar el formulario.';
+  }
+}
+
+// Fetch boxers
+let boxers = [];
+try {
+  const res = await fetch(`${apiUrl}/api/content?collection=boxers`);
+  if (res.ok) {
+    const data = await res.json();
+    boxers = data.data || [];
+  }
+} catch (error) {
+  console.error('Error fetching boxers:', error);
+}
+---
+
+<AdminLayout title="Gestión de Boxeadores">
+  
+  <div class="mb-8 flex justify-between items-center">
+    <p class="text-gray-600">Administra el roster de boxeadores registrados.</p>
+  </div>
+
+  {actionMessage && (
+    <div class="mb-6 bg-green-50 text-green-700 p-4 rounded-lg font-bold">
+      {actionMessage}
+    </div>
+  )}
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    {/* Lista */}
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="p-6 border-b border-gray-100">
+        <h3 class="text-lg font-bold text-gray-800">Directorio de Boxeadores</h3>
+      </div>
+      
+      {boxers.length === 0 ? (
+        <div class="p-8 text-center text-gray-500">No hay boxeadores registrados.</div>
+      ) : (
+        <table class="w-full text-left text-sm">
+          <thead class="bg-gray-50 text-gray-500 uppercase">
+            <tr>
+              <th class="px-6 py-3">Nombre</th>
+              <th class="px-6 py-3">Alias</th>
+              <th class="px-6 py-3">Nacionalidad</th>
+              <th class="px-6 py-3">Récord</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            {boxers.map((b: any) => (
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-4 font-bold text-gray-800">{b.data.title}</td>
+                <td class="px-6 py-4 text-gray-600">{b.data.alias || '-'}</td>
+                <td class="px-6 py-4 text-gray-600">{b.data.nationality || '-'}</td>
+                <td class="px-6 py-4 font-semibold text-blue-600">
+                  {b.data.wins || 0}-{b.data.losses || 0}-{b.data.draws || 0} ({b.data.kos || 0} KO)
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+
+    {/* Formulario */}
+    <div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Registrar Nuevo Boxeador</h3>
+        <form method="POST" class="space-y-4">
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Nombre Completo</label>
+            <input type="text" name="title" required class="w-full border border-gray-300 rounded p-2" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Apodo (Alias)</label>
+            <input type="text" name="alias" class="w-full border border-gray-300 rounded p-2" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Nacionalidad</label>
+              <input type="text" name="nationality" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Guardia</label>
+              <select name="stance" class="w-full border border-gray-300 rounded p-2">
+                <option value="Orthodox">Diestro (Orthodox)</option>
+                <option value="Southpaw">Zurdo (Southpaw)</option>
+              </select>
+            </div>
+          </div>
+
+          <hr class="my-4" />
+          <h4 class="font-bold text-gray-800">Récord Actual</h4>
+          
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm text-gray-600 mb-1">Victorias</label>
+              <input type="number" name="wins" min="0" value="0" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm text-gray-600 mb-1">Derrotas</label>
+              <input type="number" name="losses" min="0" value="0" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm text-gray-600 mb-1">Empates</label>
+              <input type="number" name="draws" min="0" value="0" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm text-gray-600 mb-1">KOs</label>
+              <input type="number" name="kos" min="0" value="0" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+          </div>
+
+          <p class="text-xs text-gray-500 mt-2">
+            Nota: La subida de foto directa está en desarrollo debido a la infraestructura en la nube. Por ahora, las fotos se suben directamente en SonicJS.
+          </p>
+
+          <button type="submit" class="w-full bg-[var(--color-primary)] text-black font-bold py-3 rounded mt-4 hover:bg-yellow-400 transition">
+            Crear Boxeador
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</AdminLayout>

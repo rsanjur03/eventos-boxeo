@@ -1,62 +1,67 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
 
-// Fetch fights
-let fights = [];
+// Fetch events
+let events = [];
 try {
   const apiUrl = import.meta.env.SONICJS_API_URL || 'https://api.comiboxchiriqui.com';
-  const res = await fetch(`${apiUrl}/api/content?collection=fight`);
+  const res = await fetch(`${apiUrl}/api/content?collection=event`);
   if (res.ok) {
     const data = await res.json();
-    fights = data.data || [];
+    events = data.data || [];
   }
 } catch (error) {
-  console.error('Error fetching fights:', error);
+  console.error('Error fetching events:', error);
 }
+
+// Helper to format date
+const formatDate = (dateString: string) => {
+  if (!dateString) return '';
+  return new Date(dateString).toLocaleDateString('es-PA', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+};
 ---
 
-<AdminLayout title="Carteleras (Peleas)">
+<AdminLayout title="Carteleras (Eventos)">
   
   <div class="mb-8 flex justify-between items-center">
-    <p class="text-gray-600">Arma las carteleras para los eventos y registra los resultados de las peleas.</p>
-    <button class="bg-[var(--color-primary)] text-black font-bold px-6 py-2 rounded-lg shadow hover:bg-yellow-400 transition">
-      + Nueva Pelea
-    </button>
+    <p class="text-gray-600">Selecciona un evento para administrar sus peleas (matchmaking) y registrar resultados.</p>
   </div>
 
   <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
     <div class="p-6 border-b border-gray-100">
-      <h3 class="text-lg font-bold text-gray-800">Historial de Peleas</h3>
+      <h3 class="text-lg font-bold text-gray-800">Todos los Eventos</h3>
     </div>
     
-    {fights.length === 0 ? (
+    {events.length === 0 ? (
       <div class="p-8 text-center text-gray-500">
-        No hay peleas registradas. Haz clic en "Nueva Pelea" para agregar una al historial.
+        No hay eventos registrados.
       </div>
     ) : (
       <table class="w-full text-left text-sm">
         <thead class="bg-gray-50 text-gray-500 uppercase">
           <tr>
-            <th class="px-6 py-3">Pelea</th>
-            <th class="px-6 py-3">Peso</th>
-            <th class="px-6 py-3">Asaltos</th>
-            <th class="px-6 py-3">Resultado</th>
+            <th class="px-6 py-3">Nombre del Evento</th>
+            <th class="px-6 py-3">Fecha</th>
+            <th class="px-6 py-3">Organizador</th>
             <th class="px-6 py-3 text-right">Acciones</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
-          {fights.map((f: any) => (
+          {events.map((e: any) => (
             <tr class="hover:bg-gray-50">
-              <td class="px-6 py-4 font-bold text-gray-800">{f.data.title}</td>
-              <td class="px-6 py-4 text-gray-600">{f.data.weightClass}</td>
-              <td class="px-6 py-4 text-gray-600">{f.data.rounds || '-'}</td>
+              <td class="px-6 py-4 font-bold text-gray-800">{e.data.title}</td>
+              <td class="px-6 py-4 text-gray-600">{formatDate(e.data.date)}</td>
               <td class="px-6 py-4">
-                <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded font-semibold text-xs">
-                  {f.data.result || 'Pendiente'}
-                </span>
+                {e.data.comiboxOrganized !== false ? (
+                  <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded font-bold text-xs">COMIBOX</span>
+                ) : (
+                  <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded font-bold text-xs">Terceros (Fiscalizado)</span>
+                )}
               </td>
               <td class="px-6 py-4 text-right">
-                <button class="text-blue-600 hover:underline">Editar</button>
+                <a href={`/admin/eventos/${e.slug}`} class="text-blue-600 hover:underline font-bold">Ver Peleas &rarr;</a>
               </td>
             </tr>
           ))}

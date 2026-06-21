@@ -31,6 +31,11 @@ export default {
         title: 'Status (Preventa, Activo, Agotado)',
         required: true,
       },
+      comiboxOrganized: {
+        type: 'boolean',
+        title: 'Organizado por COMIBOX (Venta de Boletos)',
+        default: true,
+      },
     },
     required: ['title', 'date', 'location', 'status'],
   },

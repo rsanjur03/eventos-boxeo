@@ -1,0 +1,202 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+
+const { id } = Astro.params;
+const apiUrl = import.meta.env.SONICJS_API_URL || 'https://api.comiboxchiriqui.com';
+
+// Handle POST request to create a new fight
+let actionMessage = '';
+if (Astro.request.method === 'POST') {
+  try {
+    const data = await Astro.request.formData();
+    const boxerAId = data.get('boxerAId');
+    const boxerBId = data.get('boxerBId');
+    const weightClass = data.get('weightClass');
+    const rounds = data.get('rounds');
+    
+    // We need the names for the title
+    const boxerAName = data.get('boxerAName');
+    const boxerBName = data.get('boxerBName');
+    
+    const fightData = {
+      title: `${boxerAName} vs ${boxerBName}`,
+      eventId: id,
+      boxerAId,
+      boxerBId,
+      weightClass,
+      rounds: Number(rounds),
+      result: 'Pendiente'
+    };
+
+    const res = await fetch(`${apiUrl}/api/content/fight`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(fightData)
+    });
+
+    if (res.ok) {
+      actionMessage = 'Pelea creada exitosamente.';
+    } else {
+      actionMessage = 'Error al crear la pelea en la base de datos.';
+    }
+  } catch (error) {
+    console.error(error);
+    actionMessage = 'Ocurrió un error al procesar el formulario.';
+  }
+}
+
+// Fetch event details
+let event = null;
+let fights = [];
+let boxers = [];
+
+try {
+  // 1. Fetch Event
+  const evRes = await fetch(`${apiUrl}/api/content/event/${id}`);
+  if (evRes.ok) event = await evRes.json();
+
+  // 2. Fetch all fights
+  // Note: Since SonicJS might not support complex filtering via REST easily, we filter here for now
+  const fRes = await fetch(`${apiUrl}/api/content?collection=fight`);
+  if (fRes.ok) {
+    const allFights = await fRes.json();
+    fights = (allFights.data || []).filter((f: any) => f.data.eventId === id);
+  }
+
+  // 3. Fetch all boxers for the dropdown
+  const bRes = await fetch(`${apiUrl}/api/content?collection=boxers`);
+  if (bRes.ok) {
+    const bxData = await bRes.json();
+    boxers = bxData.data || [];
+  }
+} catch (e) {
+  console.error(e);
+}
+
+if (!event) {
+  return Astro.redirect('/admin/carteleras');
+}
+---
+
+<AdminLayout title={`Peleas: ${event.data.title}`}>
+  
+  <div class="mb-6 flex justify-between items-center">
+    <a href="/admin/carteleras" class="text-blue-600 hover:underline font-semibold">&larr; Volver a Eventos</a>
+  </div>
+
+  {actionMessage && (
+    <div class="mb-6 bg-green-50 text-green-700 p-4 rounded-lg font-bold">
+      {actionMessage}
+    </div>
+  )}
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    {/* Lista de Peleas */}
+    <div class="lg:col-span-2 space-y-6">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100">
+          <h3 class="text-lg font-bold text-gray-800">Cartelera del Evento</h3>
+        </div>
+        {fights.length === 0 ? (
+          <div class="p-8 text-center text-gray-500">
+            Aún no hay peleas programadas para esta noche.
+          </div>
+        ) : (
+          <ul class="divide-y divide-gray-100">
+            {fights.map((f: any) => (
+              <li class="p-6 flex justify-between items-center hover:bg-gray-50 transition">
+                <div>
+                  <h4 class="font-black text-xl text-gray-900">{f.data.title}</h4>
+                  <p class="text-gray-500 text-sm mt-1">{f.data.weightClass} • {f.data.rounds} Asaltos</p>
+                </div>
+                <div class="text-right">
+                  <span class={`px-3 py-1 rounded-full text-xs font-bold ${f.data.result === 'Pendiente' ? 'bg-gray-100 text-gray-600' : 'bg-green-100 text-green-700'}`}>
+                    {f.data.result || 'Pendiente'}
+                  </span>
+                  <div class="mt-2">
+                    <button class="text-blue-600 text-sm hover:underline font-semibold">Registrar Resultado</button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+
+    {/* Formulario Agregar Pelea */}
+    <div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Agregar Combate</h3>
+        <form method="POST" class="space-y-4">
+          
+          <div>
+            <label class="block text-sm font-semibold text-red-600 mb-1">Esquina Roja</label>
+            <select name="boxerAId" id="boxerA" required class="w-full border border-gray-300 rounded p-2 focus:ring-red-500">
+              <option value="">Seleccionar Boxeador...</option>
+              {boxers.map((b: any) => (
+                <option value={b.slug}>{b.data.title}</option>
+              ))}
+            </select>
+            <input type="hidden" name="boxerAName" id="boxerAName" value="" />
+          </div>
+
+          <div class="flex justify-center">
+            <span class="bg-gray-900 text-white text-xs font-bold px-2 py-1 rounded">VS</span>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-blue-600 mb-1">Esquina Azul</label>
+            <select name="boxerBId" id="boxerB" required class="w-full border border-gray-300 rounded p-2 focus:ring-blue-500">
+              <option value="">Seleccionar Boxeador...</option>
+              {boxers.map((b: any) => (
+                <option value={b.slug}>{b.data.title}</option>
+              ))}
+            </select>
+            <input type="hidden" name="boxerBName" id="boxerBName" value="" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Peso Pactado</label>
+            <input type="text" name="weightClass" required placeholder="Ej: Peso Mosca (112 lbs)" class="w-full border border-gray-300 rounded p-2" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Asaltos (Rounds)</label>
+            <select name="rounds" required class="w-full border border-gray-300 rounded p-2">
+              <option value="4">4 Asaltos</option>
+              <option value="6">6 Asaltos</option>
+              <option value="8">8 Asaltos</option>
+              <option value="10">10 Asaltos</option>
+              <option value="12">12 Asaltos (Título)</option>
+            </select>
+          </div>
+
+          <button type="submit" class="w-full bg-[var(--color-primary)] text-black font-bold py-3 rounded mt-4 hover:bg-yellow-400 transition">
+            Guardar Pelea
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</AdminLayout>
+
+<script>
+  // Script para copiar el nombre del boxeador al input oculto antes de enviar el formulario
+  document.addEventListener('DOMContentLoaded', () => {
+    const selectA = document.getElementById('boxerA') as HTMLSelectElement;
+    const inputA = document.getElementById('boxerAName') as HTMLInputElement;
+    const selectB = document.getElementById('boxerB') as HTMLSelectElement;
+    const inputB = document.getElementById('boxerBName') as HTMLInputElement;
+
+    selectA?.addEventListener('change', () => {
+      inputA.value = selectA.options[selectA.selectedIndex].text;
+    });
+
+    selectB?.addEventListener('change', () => {
+      inputB.value = selectB.options[selectB.selectedIndex].text;
+    });
+  });
+</script>
