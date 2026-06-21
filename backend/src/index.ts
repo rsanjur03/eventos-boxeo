@@ -61,17 +61,24 @@ app.post('/api/unsecured/content/boxer', async (c) => {
     const now = Date.now();
     const slug = (payload.title || 'boxer').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
     
+    // Fetch valid relationships
+    const colRow = await db.prepare("SELECT id FROM collections WHERE name = 'boxer'").first();
+    const collectionId = colRow ? colRow.id : 'col-boxer-017afa39';
+    
+    const userRow = await db.prepare("SELECT id FROM users LIMIT 1").first();
+    const authorId = userRow ? userRow.id : '5515d24b-9387-4bd6-8451-d028541a60ac';
+
     await db.prepare(`
       INSERT INTO content (id, collection_id, slug, title, data, status, author_id, created_at, updated_at)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).bind(
       id,
-      'boxer',
+      collectionId,
       slug,
       payload.title || 'Unknown',
       JSON.stringify(payload),
       'published',
-      'system',
+      authorId,
       now,
       now
     ).run();
@@ -89,13 +96,17 @@ app.put('/api/unsecured/content/boxer/:id', async (c) => {
     const payload = await c.req.json();
     const now = Date.now();
     
+    // Fetch valid relationships
+    const colRow = await db.prepare("SELECT id FROM collections WHERE name = 'boxer'").first();
+    const collectionId = colRow ? colRow.id : 'col-boxer-017afa39';
+
     // First verify it exists
-    const existing = await db.prepare('SELECT data FROM content WHERE id = ? AND collection_id = ?').bind(id, 'boxer').first();
+    const existing = await db.prepare('SELECT data FROM content WHERE id = ? AND collection_id = ?').bind(id, collectionId).first();
     if (!existing) {
       return c.json({ success: false, error: 'Boxer not found' }, 404);
     }
 
-    const mergedData = { ...JSON.parse(existing.data), ...payload };
+    const mergedData = { ...JSON.parse(existing.data as string), ...payload };
 
     await db.prepare(`
       UPDATE content SET data = ?, updated_at = ? WHERE id = ? AND collection_id = ?
@@ -103,7 +114,7 @@ app.put('/api/unsecured/content/boxer/:id', async (c) => {
       JSON.stringify(mergedData),
       now,
       id,
-      'boxer'
+      collectionId
     ).run();
     
     return c.json({ success: true });
