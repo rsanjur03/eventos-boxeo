@@ -4,7 +4,7 @@ import Layout from '../layouts/Layout.astro';
 // Fetch board members for the home page preview
 let teamMembers = [];
 try {
-  const apiUrl = import.meta.env.SONICJS_API_URL || 'http://127.0.0.1:8787';
+  const apiUrl = import.meta.env.SONICJS_API_URL || 'https://api.comiboxchiriqui.com';
   const res = await fetch(`${apiUrl}/v1/content/board-members`);
   if (res.ok) {
     const data = await res.json();
