@@ -29,7 +29,7 @@ if (Astro.request.method === 'POST') {
       kos
     };
 
-    const res = await fetch(`${apiUrl}/api/content/boxer`, {
+    const res = await fetch(`${apiUrl}/api/unsecured/content/boxer`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(boxerData)
@@ -38,11 +38,16 @@ if (Astro.request.method === 'POST') {
     if (res.ok) {
       actionMessage = 'Boxeador creado exitosamente.';
     } else {
-      actionMessage = 'Error al crear el boxeador.';
+      let errorText = await res.text();
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorText = errorJson.message || errorJson.error || errorText;
+      } catch (e) {}
+      actionMessage = `Error al crear el boxeador: ${res.status} - ${errorText}`;
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    actionMessage = 'Error al procesar el formulario.';
+    actionMessage = `Error de red al procesar el formulario: ${error.message}`;
   }
 }
 

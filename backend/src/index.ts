@@ -52,6 +52,36 @@ if (contactFormPlugin.routes) {
   }
 }
 
+// Unsecured endpoint for Astro frontend to create boxers
+app.post('/api/unsecured/content/boxer', async (c) => {
+  try {
+    const db = c.env.DB;
+    const payload = await c.req.json();
+    const id = crypto.randomUUID();
+    const now = Date.now();
+    const slug = (payload.title || 'boxer').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
+    
+    await db.prepare(`
+      INSERT INTO content (id, collection_id, slug, title, data, status, author_id, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      id,
+      'boxer',
+      slug,
+      payload.title || 'Unknown',
+      JSON.stringify(payload),
+      'published',
+      'system',
+      now,
+      now
+    ).run();
+    
+    return c.json({ success: true, id });
+  } catch (error: any) {
+    return c.json({ success: false, error: error.message }, 500);
+  }
+});
+
 // Mount core app last (catch-all)
 app.route('/', coreApp)
 
