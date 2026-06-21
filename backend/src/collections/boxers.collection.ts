@@ -74,7 +74,11 @@ export default {
       },
       kos: {
         type: 'number',
-        title: 'KOs',
+        title: 'KOs (Wins)',
+      },
+      kos_lost: {
+        type: 'number',
+        title: 'KOs (Losses)',
       },
       imageUrl: {
         type: 'media',

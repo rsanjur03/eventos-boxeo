@@ -10,23 +10,25 @@ if (Astro.request.method === 'POST') {
     const title = data.get('title');
     const alias = data.get('alias');
     const nationality = data.get('nationality');
+    const province = data.get('province');
+    const height = data.get('height');
     const weight = data.get('weight');
     const stance = data.get('stance');
+    const dob = data.get('dob');
+    const birthPlace = data.get('birthPlace');
+    const residence = data.get('residence');
+    const trainer = data.get('trainer');
+    const manager = data.get('manager');
+
     const wins = Number(data.get('wins') || 0);
     const losses = Number(data.get('losses') || 0);
     const draws = Number(data.get('draws') || 0);
     const kos = Number(data.get('kos') || 0);
+    const kos_lost = Number(data.get('kos_lost') || 0);
     
     const boxerData = {
-      title,
-      alias,
-      nationality,
-      weight,
-      stance,
-      wins,
-      losses,
-      draws,
-      kos
+      title, alias, nationality, province, height, weight, stance, dob, birthPlace, residence, trainer, manager,
+      wins, losses, draws, kos, kos_lost
     };
 
     const res = await fetch(`${apiUrl}/api/unsecured/content/boxer`, {
@@ -134,18 +136,50 @@ try {
               <input type="text" name="nationality" class="w-full border border-gray-300 rounded p-2" />
             </div>
             <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Provincia</label>
+              <input type="text" name="province" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
               <label class="block text-sm font-semibold text-gray-700 mb-1">Guardia</label>
               <select name="stance" class="w-full border border-gray-300 rounded p-2">
                 <option value="Orthodox">Diestro (Orthodox)</option>
                 <option value="Southpaw">Zurdo (Southpaw)</option>
               </select>
             </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Fecha de Nacimiento</label>
+              <input type="date" name="dob" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Lugar de Nacimiento</label>
+              <input type="text" name="birthPlace" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Residencia</label>
+              <input type="text" name="residence" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Estatura</label>
+              <input type="text" name="height" placeholder="Ej: 5'8&quot;" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Peso Natural</label>
+              <input type="text" name="weight" placeholder="Ej: 135 lbs" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Entrenador</label>
+              <input type="text" name="trainer" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Manejador</label>
+              <input type="text" name="manager" class="w-full border border-gray-300 rounded p-2" />
+            </div>
           </div>
 
           <hr class="my-4" />
           <h4 class="font-bold text-gray-800">Récord Actual</h4>
           
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-3 gap-4">
             <div>
               <label class="block text-sm text-gray-600 mb-1">Victorias</label>
               <input type="number" name="wins" min="0" value="0" class="w-full border border-gray-300 rounded p-2" />
@@ -159,8 +193,12 @@ try {
               <input type="number" name="draws" min="0" value="0" class="w-full border border-gray-300 rounded p-2" />
             </div>
             <div>
-              <label class="block text-sm text-gray-600 mb-1">KOs</label>
+              <label class="block text-sm text-gray-600 mb-1">KOs (Ganados)</label>
               <input type="number" name="kos" min="0" value="0" class="w-full border border-gray-300 rounded p-2" />
+            </div>
+            <div>
+              <label class="block text-sm text-gray-600 mb-1">KOs (Perdidos)</label>
+              <input type="number" name="kos_lost" min="0" value="0" class="w-full border border-gray-300 rounded p-2" />
             </div>
           </div>
 

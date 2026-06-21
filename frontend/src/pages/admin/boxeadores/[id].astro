@@ -23,6 +23,18 @@ if (!boxer) {
 // Ensure bouts array exists
 if (!boxer.data.bouts) boxer.data.bouts = [];
 
+let calculatedAge = '-';
+if (boxer.data.dob) {
+  const birthDate = new Date(boxer.data.dob);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  calculatedAge = age.toString() + ' años';
+}
+
 if (Astro.request.method === 'POST') {
   try {
     const data = await Astro.request.formData();
@@ -45,6 +57,7 @@ if (Astro.request.method === 'POST') {
       let losses = Number(boxer.data.losses || 0);
       let draws = Number(boxer.data.draws || 0);
       let kos = Number(boxer.data.kos || 0);
+      let kos_lost = Number(boxer.data.kos_lost || 0);
       
       if (newBout.result === 'W') {
         wins += 1;
@@ -53,6 +66,9 @@ if (Astro.request.method === 'POST') {
         }
       } else if (newBout.result === 'L') {
         losses += 1;
+        if (newBout.method === 'KO' || newBout.method === 'TKO') {
+          kos_lost += 1;
+        }
       } else if (newBout.result === 'D') {
         draws += 1;
       }
@@ -60,7 +76,7 @@ if (Astro.request.method === 'POST') {
       const res = await fetch(`${apiUrl}/api/unsecured/content/boxer/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bouts, wins, losses, draws, kos })
+        body: JSON.stringify({ bouts, wins, losses, draws, kos, kos_lost })
       });
 
       if (res.ok) {
@@ -71,6 +87,7 @@ if (Astro.request.method === 'POST') {
         boxer.data.losses = losses;
         boxer.data.draws = draws;
         boxer.data.kos = kos;
+        boxer.data.kos_lost = kos_lost;
       } else {
         actionMessage = 'Error al guardar el historial.';
       }
@@ -114,25 +131,34 @@ if (Astro.request.method === 'POST') {
           <div class="text-center">
             <span class="block text-2xl font-bold text-green-600">{boxer.data.wins || 0}</span>
             <span class="text-xs text-gray-500 font-bold uppercase">Victorias</span>
+            <span class="block text-xs font-bold text-green-700 mt-1">{boxer.data.kos || 0} KOs</span>
           </div>
           <div class="text-center">
             <span class="block text-2xl font-bold text-red-600">{boxer.data.losses || 0}</span>
             <span class="text-xs text-gray-500 font-bold uppercase">Derrotas</span>
+            <span class="block text-xs font-bold text-red-700 mt-1">{boxer.data.kos_lost || 0} KOs</span>
           </div>
           <div class="text-center">
             <span class="block text-2xl font-bold text-gray-600">{boxer.data.draws || 0}</span>
             <span class="text-xs text-gray-500 font-bold uppercase">Empates</span>
           </div>
         </div>
-        <p class="text-sm font-semibold text-gray-400 mt-2">({boxer.data.kos || 0} KOs)</p>
       </div>
 
       <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">Información</h3>
         <ul class="space-y-3 text-sm">
           <li class="flex justify-between"><span class="text-gray-500">Nacionalidad:</span> <span class="font-semibold text-gray-800">{boxer.data.nationality || '-'}</span></li>
+          <li class="flex justify-between"><span class="text-gray-500">Provincia:</span> <span class="font-semibold text-gray-800">{boxer.data.province || '-'}</span></li>
+          <li class="flex justify-between"><span class="text-gray-500">Fecha Nacimiento:</span> <span class="font-semibold text-gray-800">{boxer.data.dob || '-'}</span></li>
+          <li class="flex justify-between"><span class="text-gray-500">Edad:</span> <span class="font-semibold text-gray-800">{calculatedAge}</span></li>
+          <li class="flex justify-between"><span class="text-gray-500">Lugar Nacimiento:</span> <span class="font-semibold text-gray-800">{boxer.data.birthPlace || '-'}</span></li>
+          <li class="flex justify-between"><span class="text-gray-500">Residencia:</span> <span class="font-semibold text-gray-800">{boxer.data.residence || '-'}</span></li>
+          <li class="flex justify-between"><span class="text-gray-500">Estatura:</span> <span class="font-semibold text-gray-800">{boxer.data.height || '-'}</span></li>
           <li class="flex justify-between"><span class="text-gray-500">Peso:</span> <span class="font-semibold text-gray-800">{boxer.data.weight || '-'}</span></li>
           <li class="flex justify-between"><span class="text-gray-500">Guardia:</span> <span class="font-semibold text-gray-800">{boxer.data.stance || '-'}</span></li>
+          <li class="flex justify-between"><span class="text-gray-500">Entrenador:</span> <span class="font-semibold text-gray-800">{boxer.data.trainer || '-'}</span></li>
+          <li class="flex justify-between"><span class="text-gray-500">Manejador:</span> <span class="font-semibold text-gray-800">{boxer.data.manager || '-'}</span></li>
         </ul>
       </div>
     </div>
