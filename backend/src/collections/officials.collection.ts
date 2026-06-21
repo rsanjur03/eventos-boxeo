@@ -70,3 +70,5 @@ const officialCollection = {
   managed: true,
   isActive: true,
 } satisfies CollectionConfig;
+
+export default officialCollection;
