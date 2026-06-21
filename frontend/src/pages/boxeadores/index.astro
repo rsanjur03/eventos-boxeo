@@ -1,27 +1,47 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 
-// This will fetch from SonicJS backend in production
-const boxers = [
-  {
-    id: 'luis-concepcion',
-    title: 'Luis Concepcion',
-    alias: 'El Nica',
-    weightClass: 'Supermosca',
-    nationality: 'Panamá',
-    imageUrl: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=400&auto=format&fit=crop', // Fallback image
-    record: '40-12-0 (29 KOs)'
-  },
-  {
-    id: 'javier-garcia',
-    title: 'Javier García',
-    alias: 'El Toro',
-    weightClass: 'Ligero',
-    nationality: 'México',
-    imageUrl: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=400&auto=format&fit=crop',
-    record: '27-0-2 (15 KOs)'
+let boxers = [];
+try {
+  const apiUrl = import.meta.env.SONICJS_API_URL || 'https://api.comiboxchiriqui.com';
+  const res = await fetch(`${apiUrl}/api/content?collection=boxer`);
+  if (res.ok) {
+    const data = await res.json();
+    boxers = (data.data || []).map((item: any) => {
+      const wins = item.data.wins || 0;
+      const losses = item.data.losses || 0;
+      const draws = item.data.draws || 0;
+      const kos = item.data.kos || 0;
+
+      return {
+        id: item.slug,
+        title: item.data.title,
+        alias: item.data.alias || 'Sin Apodo',
+        weightClass: item.data.weight || 'Peso Libre', // Fallback for now
+        nationality: item.data.nationality || 'Panamá',
+        imageUrl: item.data.imageUrl ? `${apiUrl}${item.data.imageUrl}` : 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=400&auto=format&fit=crop',
+        record: `${wins}-${losses}-${draws} (${kos} KOs)`
+      };
+    });
   }
-];
+} catch (error) {
+  console.error('Error connecting to SonicJS:', error);
+}
+
+// Fallback for development if DB is empty
+if (boxers.length === 0) {
+  boxers = [
+    {
+      id: 'luis-concepcion',
+      title: 'Luis Concepcion',
+      alias: 'El Nica',
+      weightClass: 'Supermosca',
+      nationality: 'Panamá',
+      imageUrl: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=400&auto=format&fit=crop',
+      record: '40-12-0 (29 KOs)'
+    }
+  ];
+}
 ---
 
 <Layout>

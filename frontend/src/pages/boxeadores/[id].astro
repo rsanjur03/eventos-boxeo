@@ -1,18 +1,53 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 
-export function getStaticPaths() {
-  return [
-    { params: { id: 'luis-concepcion' } },
-    { params: { id: 'javier-garcia' } }
-  ];
-}
-
 const { id } = Astro.params;
 
-// Mock data (will fetch from SonicJS in prod)
-const boxerData = {
-  'luis-concepcion': {
+let boxer: any = null;
+try {
+  const apiUrl = import.meta.env.SONICJS_API_URL || 'https://api.comiboxchiriqui.com';
+  const res = await fetch(`${apiUrl}/api/content?collection=boxer`);
+  if (res.ok) {
+    const data = await res.json();
+    const boxerData = (data.data || []).find((b: any) => b.slug === id);
+    if (boxerData) {
+      boxer = {
+        name: boxerData.data.title,
+        alias: boxerData.data.alias || 'Sin Apodo',
+        division: boxerData.data.weight || 'Peso Libre',
+        idNum: boxerData.id.split('-')[1] || boxerData.id.slice(0,6),
+        birthName: boxerData.data.title,
+        sex: 'Masculino', 
+        age: boxerData.data.dob ? new Date().getFullYear() - new Date(boxerData.data.dob).getFullYear() : 'N/A',
+        nationality: boxerData.data.nationality || 'Panamá',
+        stance: boxerData.data.stance || 'Orthodox',
+        height: boxerData.data.height || 'N/A',
+        reach: 'N/A',
+        residence: boxerData.data.residence || 'Panamá',
+        birthPlace: boxerData.data.birthPlace || 'Panamá',
+        bouts: (boxerData.data.wins || 0) + (boxerData.data.losses || 0) + (boxerData.data.draws || 0),
+        rounds: 0,
+        koPercentage: (boxerData.data.wins || 0) > 0 ? Math.round(((boxerData.data.kos || 0) / ((boxerData.data.wins || 0) + (boxerData.data.losses || 0) + (boxerData.data.draws || 0))) * 100) + '%' : '0%',
+        career: 'Activo',
+        debut: 'N/A',
+        stats: { 
+          wins: boxerData.data.wins || 0, 
+          losses: boxerData.data.losses || 0, 
+          draws: boxerData.data.draws || 0, 
+          kos: boxerData.data.kos || 0 
+        },
+        imageUrl: boxerData.data.imageUrl ? `${apiUrl}${boxerData.data.imageUrl}` : 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=400&auto=format&fit=crop',
+        fights: []
+      };
+    }
+  }
+} catch (error) {
+  console.error('Error fetching boxer:', error);
+}
+
+// Fallback just in case the database is completely empty during development or wrong ID
+if (!boxer) {
+  boxer = {
     name: 'Luis Concepcion',
     alias: 'El Nica',
     division: 'Supermosca',
@@ -38,10 +73,8 @@ const boxerData = {
       { date: 'Oct 2023', opponent: 'David Cuellar', oppRecord: '25-0-0', result: 'L', venue: 'Poliforum, Cancun' },
       { date: 'Jun 2022', opponent: 'Juan Lopez', oppRecord: '15-9-1', result: 'W', venue: 'Coliseo de Combates, Panama City' },
     ]
-  }
-};
-
-const boxer = boxerData[id as keyof typeof boxerData] || boxerData['luis-concepcion'];
+  };
+}
 ---
 
 <Layout>
