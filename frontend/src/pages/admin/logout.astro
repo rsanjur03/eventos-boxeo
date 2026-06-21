@@ -1,0 +1,6 @@
+---
+if (Astro.request.method === 'POST') {
+  Astro.cookies.delete('admin_session', { path: '/admin' });
+}
+return Astro.redirect('/admin/login');
+---
