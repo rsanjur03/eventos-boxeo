@@ -116,6 +116,33 @@ app.post('/api/unsecured/content/fight', async (c) => {
   }
 });
 
+app.post('/api/unsecured/content/official', async (c) => {
+  try {
+    const db = c.env.DB;
+    const payload = await c.req.json();
+    const id = crypto.randomUUID();
+    const now = Date.now();
+    const slug = (payload.title || 'official').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
+    
+    const colRow = await db.prepare("SELECT id FROM collections WHERE name = 'official'").first();
+    const collectionId = colRow ? colRow.id : 'official';
+    
+    const userRow = await db.prepare("SELECT id FROM users LIMIT 1").first();
+    const authorId = userRow ? userRow.id : 'system';
+
+    await db.prepare(`
+      INSERT INTO content (id, collection_id, slug, title, data, status, author_id, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      id, collectionId, slug, payload.title || 'Official', JSON.stringify(payload), 'published', authorId, now, now
+    ).run();
+    
+    return c.json({ success: true, id });
+  } catch (error: any) {
+    return c.json({ success: false, error: error.message }, 500);
+  }
+});
+
 app.put('/api/unsecured/content/boxer/:id', async (c) => {
   try {
     const db = c.env.DB;

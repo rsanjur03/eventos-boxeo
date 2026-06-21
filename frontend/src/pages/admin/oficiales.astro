@@ -1,0 +1,171 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+const apiUrl = import.meta.env.SONICJS_API_URL || 'https://api.comiboxchiriqui.com';
+let actionMessage = '';
+
+if (Astro.request.method === 'POST') {
+  try {
+    const data = await Astro.request.formData();
+    const title = data.get('title');
+    const dob = data.get('dob');
+    const isReferee = data.get('isReferee') === 'on';
+    const isJudge = data.get('isJudge') === 'on';
+    const isTimekeeper = data.get('isTimekeeper') === 'on';
+    
+    const officialData = {
+      title,
+      dob,
+      isReferee,
+      isJudge,
+      isTimekeeper
+    };
+
+    const res = await fetch(`${apiUrl}/api/unsecured/content/official`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(officialData)
+    });
+
+    if (res.ok) {
+      actionMessage = 'Oficial creado exitosamente.';
+    } else {
+      let errorText = await res.text();
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorText = errorJson.message || errorJson.error || errorText;
+      } catch (e) {}
+      actionMessage = `Error al crear el oficial: ${res.status} - ${errorText}`;
+    }
+  } catch (error: any) {
+    console.error(error);
+    actionMessage = `Error de red al procesar el formulario: ${error.message}`;
+  }
+}
+
+// Fetch officials
+let officials = [];
+try {
+  const res = await fetch(`${apiUrl}/api/content?collection=official`);
+  if (res.ok) {
+    const data = await res.json();
+    officials = data.data || [];
+  }
+} catch (error) {
+  console.error('Error fetching officials:', error);
+}
+
+// Helper to calculate age
+const getAge = (dobString: string) => {
+  if (!dobString) return '-';
+  const birthDate = new Date(dobString);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+};
+
+// Helper to format roles
+const getRolesStr = (official: any) => {
+  const roles = [];
+  if (official.data.isReferee) roles.push('Árbitro');
+  if (official.data.isJudge) roles.push('Juez');
+  if (official.data.isTimekeeper) roles.push('Juez de Tiempo');
+  return roles.join(', ') || 'Sin rol asignado';
+};
+---
+
+<AdminLayout title="Gestión de Oficiales (Jueces y Árbitros)">
+  
+  <div class="mb-8 flex justify-between items-center">
+    <p class="text-gray-600">Administra a los Jueces, Árbitros y Jueces de Tiempo.</p>
+  </div>
+
+  {actionMessage && (
+    <div class="mb-6 bg-green-50 text-green-700 p-4 rounded-lg font-bold">
+      {actionMessage}
+    </div>
+  )}
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    {/* Lista */}
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="p-6 border-b border-gray-100">
+        <h3 class="text-lg font-bold text-gray-800">Directorio de Oficiales</h3>
+      </div>
+      
+      {officials.length === 0 ? (
+        <div class="p-8 text-center text-gray-500">No hay oficiales registrados.</div>
+      ) : (
+        <table class="w-full text-left text-sm">
+          <thead class="bg-gray-50 text-gray-500 uppercase">
+            <tr>
+              <th class="px-6 py-3">Nombre</th>
+              <th class="px-6 py-3">Roles</th>
+              <th class="px-6 py-3">Edad</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            {officials.map((o: any) => (
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-4 font-bold text-gray-800">{o.data.title}</td>
+                <td class="px-6 py-4 text-blue-700 font-semibold">{getRolesStr(o)}</td>
+                <td class="px-6 py-4 text-gray-600">{getAge(o.data.dob)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+
+    {/* Formulario */}
+    <div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Registrar Nuevo Oficial</h3>
+        <form method="POST" class="space-y-4">
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Nombre Completo</label>
+            <input type="text" name="title" required class="w-full border border-gray-300 rounded p-2" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Fecha de Nacimiento</label>
+            <input type="date" name="dob" class="w-full border border-gray-300 rounded p-2" />
+          </div>
+
+          <div class="pt-2">
+            <label class="block text-sm font-bold text-gray-800 mb-2">Selecciona los roles:</label>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="checkbox" name="isReferee" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <span class="text-gray-700 font-semibold">Árbitro</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="checkbox" name="isJudge" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <span class="text-gray-700 font-semibold">Juez</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="checkbox" name="isTimekeeper" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <span class="text-gray-700 font-semibold">Juez de Tiempo</span>
+              </label>
+            </div>
+          </div>
+
+          <p class="text-xs text-gray-500 mt-2">
+            Nota: Para agregar o editar la foto del oficial, deberás hacerlo desde el administrador avanzado de SonicJS por ahora.
+          </p>
+
+          <button type="submit" class="w-full bg-[var(--color-primary)] text-black font-bold py-3 rounded mt-4 hover:bg-yellow-400 transition">
+            Crear Oficial
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</AdminLayout>
