@@ -21,7 +21,7 @@ bucket_name = "eventos-comiboxch-media"
 # Environment variables
 [vars]
 ENVIRONMENT = "development"
-CORS_ORIGINS = "http://localhost:8787"
+CORS_ORIGINS = "http://localhost:8787,https://eventos-boxeo-backend.ricardosanjur.workers.dev,https://api.comiboxchiriqui.com"
 
 # Production environment
 [env.production]
