@@ -82,6 +82,36 @@ app.post('/api/unsecured/content/boxer', async (c) => {
   }
 });
 
+app.put('/api/unsecured/content/boxer/:id', async (c) => {
+  try {
+    const db = c.env.DB;
+    const id = c.req.param('id');
+    const payload = await c.req.json();
+    const now = Date.now();
+    
+    // First verify it exists
+    const existing = await db.prepare('SELECT data FROM content WHERE id = ? AND collection_id = ?').bind(id, 'boxer').first();
+    if (!existing) {
+      return c.json({ success: false, error: 'Boxer not found' }, 404);
+    }
+
+    const mergedData = { ...JSON.parse(existing.data), ...payload };
+
+    await db.prepare(`
+      UPDATE content SET data = ?, updated_at = ? WHERE id = ? AND collection_id = ?
+    `).bind(
+      JSON.stringify(mergedData),
+      now,
+      id,
+      'boxer'
+    ).run();
+    
+    return c.json({ success: true });
+  } catch (error: any) {
+    return c.json({ success: false, error: error.message }, 500);
+  }
+});
+
 // Mount core app last (catch-all)
 app.route('/', coreApp)
 

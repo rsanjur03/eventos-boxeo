@@ -80,6 +80,21 @@ export default {
         type: 'media',
         title: 'Image',
       },
+      bouts: {
+        type: 'array',
+        title: 'Fight History',
+        items: {
+          type: 'object',
+          properties: {
+            date: { type: 'string' },
+            opponent: { type: 'string' },
+            result: { type: 'string' },
+            method: { type: 'string' },
+            rounds: { type: 'string' },
+            location: { type: 'string' }
+          }
+        }
+      }
     },
     required: ['title'],
   },

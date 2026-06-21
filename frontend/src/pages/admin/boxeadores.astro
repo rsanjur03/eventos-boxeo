@@ -98,11 +98,11 @@ try {
           </thead>
           <tbody class="divide-y divide-gray-100">
             {boxers.map((b: any) => (
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 font-bold text-gray-800">{b.data.title}</td>
+              <tr class="hover:bg-gray-50 cursor-pointer" onclick={`window.location.href='/admin/boxeadores/${b.id}'`}>
+                <td class="px-6 py-4 font-bold text-gray-800 text-blue-600 hover:underline">{b.data.title}</td>
                 <td class="px-6 py-4 text-gray-600">{b.data.alias || '-'}</td>
                 <td class="px-6 py-4 text-gray-600">{b.data.nationality || '-'}</td>
-                <td class="px-6 py-4 font-semibold text-blue-600">
+                <td class="px-6 py-4 font-semibold text-gray-700">
                   {b.data.wins || 0}-{b.data.losses || 0}-{b.data.draws || 0} ({b.data.kos || 0} KO)
                 </td>
               </tr>
