@@ -6,47 +6,66 @@ const { title } = Astro.props;
 <!doctype html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="COMIBOX Admin Portal" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} | Admin COMIBOX</title>
+    <title>{title} - COMIBOX Admin</title>
+    <style>
+      :root {
+        --color-primary: #e63946; /* Rojo */
+        --color-secondary: #2a9d8f; /* Verde */
+        --color-sidebar: #1b4332; /* Verde Oscuro */
+      }
+      body {
+        background-color: #f8f9fa; /* Blanco/Gris claro */
+      }
+    </style>
   </head>
-  <body class="bg-gray-100 min-h-screen">
-    <div class="flex min-h-screen">
-      <!-- Sidebar -->
-      <aside class="w-64 bg-gray-900 text-white min-h-screen">
+  <body class="font-sans antialiased text-gray-900 flex h-screen overflow-hidden">
+    
+    {/* Sidebar */}
+    <aside class="w-64 flex-shrink-0 flex flex-col justify-between" style="background-color: var(--color-sidebar); color: white;">
+      <div>
         <div class="p-6">
-          <h2 class="text-2xl font-black text-[var(--color-primary)]">COMIBOX</h2>
-          <p class="text-sm text-gray-400">Panel Administrativo</p>
-        </div>
-        <nav class="mt-6 px-4 space-y-2">
-          <a href="/admin" class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition">📊 Dashboard</a>
-          <a href="/admin/carteleras" class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition">🥊 Carteleras (Peleas)</a>
-          <a href="/admin/boxeadores" class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition">🥊 Boxeadores</a>
-          <a href="/admin/taquilla" class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition">🎟️ Taquilla & Libretas</a>
-          <a href="/admin/contabilidad" class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition">💰 Contabilidad</a>
-          <hr class="border-gray-700 my-4" />
-          <a href="/" class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition text-gray-400">⬅️ Volver a la Web</a>
-        </nav>
-      </aside>
-
-      <!-- Main Content -->
-      <main class="flex-1 p-8">
-        <header class="flex justify-between items-center mb-8 bg-white p-4 rounded-xl shadow-sm">
-          <h1 class="text-2xl font-bold text-gray-800">{title}</h1>
-          <div class="flex items-center gap-4">
-            <span class="text-sm font-semibold text-gray-600">Admin</span>
-            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-500">A</div>
-            <form method="POST" action="/admin/logout">
-              <button type="submit" class="text-xs text-red-600 hover:underline font-bold">Cerrar Sesión</button>
-            </form>
+          <div class="flex items-center space-x-3 mb-2">
+            <img src="/logo.png" alt="COMIBOX" class="w-12 h-12 object-contain bg-white rounded-full p-1" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjZmZmIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFiNDMzMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkM8L3RleHQ+PC9zdmc+'" />
+            <h1 class="text-2xl font-black tracking-tight uppercase" style="color: var(--color-primary);">
+              COMIBOX
+            </h1>
           </div>
-        </header>
+          <p class="text-xs text-gray-300 font-medium">Panel Administrativo</p>
+        </div>
+        
+        <nav class="mt-6 px-4 space-y-2">
+          <a href="/admin" class="block px-4 py-3 rounded-lg hover:bg-green-800 transition">📊 Dashboard</a>
+          <a href="/admin/carteleras" class="block px-4 py-3 rounded-lg hover:bg-green-800 transition">🥊 Carteleras (Peleas)</a>
+          <a href="/admin/boxeadores" class="block px-4 py-3 rounded-lg hover:bg-green-800 transition">🥊 Boxeadores</a>
+          <a href="/admin/taquilla" class="block px-4 py-3 rounded-lg hover:bg-green-800 transition">🎟️ Taquilla & Libretas</a>
+          <a href="/admin/contabilidad" class="block px-4 py-3 rounded-lg hover:bg-green-800 transition">💰 Contabilidad</a>
+          <hr class="border-green-800 my-4" />
+          <a href="/" class="block px-4 py-3 rounded-lg text-blue-300 hover:bg-green-800 transition">⬅️ Volver a la Web</a>
+        </nav>
+      </div>
+    </aside>
 
+    {/* Main Content */}
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+      <header class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+        <h2 class="text-2xl font-bold text-gray-800">{title}</h2>
+        <div class="flex items-center space-x-4">
+          <span class="text-sm font-semibold text-gray-600">Admin</span>
+          <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">
+            A
+          </div>
+          <form method="POST" action="/admin/logout">
+            <button type="submit" class="text-sm text-[var(--color-primary)] font-bold hover:underline">Cerrar Sesión</button>
+          </form>
+        </div>
+      </header>
+      
+      <div class="p-8 max-w-7xl mx-auto w-full">
         <slot />
-      </main>
-    </div>
+      </div>
+    </main>
+
   </body>
 </html>
-

@@ -64,7 +64,7 @@ try {
   }
 
   // 3. Fetch all boxers for the dropdown
-  const bRes = await fetch(`${apiUrl}/api/content?collection=boxers`);
+  const bRes = await fetch(`${apiUrl}/api/content?collection=boxer`);
   if (bRes.ok) {
     const bxData = await bRes.json();
     boxers = bxData.data || [];

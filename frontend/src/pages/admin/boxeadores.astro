@@ -29,7 +29,7 @@ if (Astro.request.method === 'POST') {
       kos
     };
 
-    const res = await fetch(`${apiUrl}/api/content/boxers`, {
+    const res = await fetch(`${apiUrl}/api/content/boxer`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(boxerData)
@@ -49,7 +49,7 @@ if (Astro.request.method === 'POST') {
 // Fetch boxers
 let boxers = [];
 try {
-  const res = await fetch(`${apiUrl}/api/content?collection=boxers`);
+  const res = await fetch(`${apiUrl}/api/content?collection=boxer`);
   if (res.ok) {
     const data = await res.json();
     boxers = data.data || [];
