@@ -1,4 +1,6 @@
 ---
+import '../../../styles/global.css';
+
 const ALLOWED_EMAILS = ['ricardosanjur@gmail.com', 'eysbel@gmail.com'];
 const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD || 'Comibox2026';
 
@@ -89,8 +91,3 @@ if (Astro.request.method === 'POST') {
   </body>
 </html>
 
-<style is:global>
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-</style>
