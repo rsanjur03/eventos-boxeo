@@ -93,6 +93,38 @@ if (Astro.request.method === 'POST') {
         let errText = await res.text();
         actionMessage = `Error al guardar el historial: ${errText}`;
       }
+    } else if (type === 'editInfo') {
+      const updatedBoxer = {
+        title: data.get('title'),
+        alias: data.get('alias'),
+        nationality: data.get('nationality'),
+        province: data.get('province'),
+        dob: data.get('dob'),
+        birthPlace: data.get('birthPlace'),
+        residence: data.get('residence'),
+        height: data.get('height'),
+        weight: data.get('weight'),
+        stance: data.get('stance'),
+        trainer: data.get('trainer'),
+        manager: data.get('manager'),
+        wins: Number(data.get('wins') || 0),
+        losses: Number(data.get('losses') || 0),
+        draws: Number(data.get('draws') || 0),
+        kos: Number(data.get('kos') || 0),
+        kos_lost: Number(data.get('kos_lost') || 0),
+      };
+      const res = await fetch(`${apiUrl}/api/unsecured/content/boxer/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedBoxer)
+      });
+      if (res.ok) {
+        actionMessage = 'Información actualizada correctamente.';
+        Object.assign(boxer.data, updatedBoxer);
+      } else {
+        let errText = await res.text();
+        actionMessage = `Error al actualizar la información: ${errText}`;
+      }
     }
   } catch (error) {
     console.error(error);
@@ -147,8 +179,11 @@ if (Astro.request.method === 'POST') {
         </div>
       </div>
 
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">Información</h3>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6" id="info-view">
+        <div class="flex justify-between items-center border-b pb-2 mb-4">
+          <h3 class="font-bold text-gray-800">Información</h3>
+          <button onclick="document.getElementById('info-view').classList.add('hidden'); document.getElementById('info-edit').classList.remove('hidden');" class="text-blue-600 hover:underline text-xs font-bold">Editar</button>
+        </div>
         <ul class="space-y-3 text-sm">
           <li class="flex justify-between"><span class="text-gray-500">Nacionalidad:</span> <span class="font-semibold text-gray-800">{boxer.data.nationality || '-'}</span></li>
           <li class="flex justify-between"><span class="text-gray-500">Provincia:</span> <span class="font-semibold text-gray-800">{boxer.data.province || '-'}</span></li>
@@ -162,6 +197,40 @@ if (Astro.request.method === 'POST') {
           <li class="flex justify-between"><span class="text-gray-500">Entrenador:</span> <span class="font-semibold text-gray-800">{boxer.data.trainer || '-'}</span></li>
           <li class="flex justify-between"><span class="text-gray-500">Manejador:</span> <span class="font-semibold text-gray-800">{boxer.data.manager || '-'}</span></li>
         </ul>
+      </div>
+
+      <div class="bg-gray-50 rounded-xl shadow-sm border border-blue-200 p-6 hidden" id="info-edit">
+        <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-4">
+          <h3 class="font-bold text-gray-800">Editar Información</h3>
+          <button onclick="document.getElementById('info-edit').classList.add('hidden'); document.getElementById('info-view').classList.remove('hidden');" class="text-red-600 hover:underline text-xs font-bold">Cancelar</button>
+        </div>
+        <form method="POST" class="space-y-3 text-sm">
+          <input type="hidden" name="actionType" value="editInfo" />
+          
+          <div class="grid grid-cols-2 gap-2">
+            <div><label class="text-xs text-gray-500 font-bold block mb-1">Victorias</label><input type="number" name="wins" value={boxer.data.wins || 0} class="w-full border rounded p-1" /></div>
+            <div><label class="text-xs text-gray-500 font-bold block mb-1">KOs (Victorias)</label><input type="number" name="kos" value={boxer.data.kos || 0} class="w-full border rounded p-1" /></div>
+            <div><label class="text-xs text-gray-500 font-bold block mb-1">Derrotas</label><input type="number" name="losses" value={boxer.data.losses || 0} class="w-full border rounded p-1" /></div>
+            <div><label class="text-xs text-gray-500 font-bold block mb-1">KOs (Derrotas)</label><input type="number" name="kos_lost" value={boxer.data.kos_lost || 0} class="w-full border rounded p-1" /></div>
+            <div><label class="text-xs text-gray-500 font-bold block mb-1">Empates</label><input type="number" name="draws" value={boxer.data.draws || 0} class="w-full border rounded p-1" /></div>
+          </div>
+          <hr class="my-2 border-gray-200" />
+          
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Nombre</label><input type="text" name="title" value={boxer.data.title} class="w-full border rounded p-1" /></div>
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Apodo</label><input type="text" name="alias" value={boxer.data.alias} class="w-full border rounded p-1" /></div>
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Nacionalidad</label><input type="text" name="nationality" value={boxer.data.nationality} class="w-full border rounded p-1" /></div>
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Provincia</label><input type="text" name="province" value={boxer.data.province} class="w-full border rounded p-1" /></div>
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Fecha Nac.</label><input type="date" name="dob" value={boxer.data.dob} class="w-full border rounded p-1" /></div>
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Lugar Nac.</label><input type="text" name="birthPlace" value={boxer.data.birthPlace} class="w-full border rounded p-1" /></div>
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Residencia</label><input type="text" name="residence" value={boxer.data.residence} class="w-full border rounded p-1" /></div>
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Estatura</label><input type="text" name="height" value={boxer.data.height} class="w-full border rounded p-1" /></div>
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Peso (Lbs/Kg)</label><input type="text" name="weight" value={boxer.data.weight} class="w-full border rounded p-1" /></div>
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Guardia</label><input type="text" name="stance" value={boxer.data.stance} class="w-full border rounded p-1" /></div>
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Entrenador</label><input type="text" name="trainer" value={boxer.data.trainer} class="w-full border rounded p-1" /></div>
+          <div><label class="text-xs text-gray-500 font-bold block mb-1">Manejador</label><input type="text" name="manager" value={boxer.data.manager} class="w-full border rounded p-1" /></div>
+          
+          <div class="mt-4"><button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded">Guardar Cambios</button></div>
+        </form>
       </div>
     </div>
 
