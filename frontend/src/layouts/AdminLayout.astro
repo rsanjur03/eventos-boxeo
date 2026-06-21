@@ -26,12 +26,17 @@ const { title } = Astro.props;
     <aside class="w-64 flex-shrink-0 flex flex-col justify-between" style="background-color: var(--color-sidebar); color: white;">
       <div>
         <div class="p-6">
-          <div class="flex items-center space-x-3 mb-2">
-            <img src="/logo.png" alt="COMIBOX" class="w-12 h-12 object-contain bg-white rounded-full p-1" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjZmZmIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFiNDMzMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkM8L3RleHQ+PC9zdmc+'" />
-            <h1 class="text-2xl font-black tracking-tight uppercase" style="color: var(--color-primary);">
-              COMIBOX
-            </h1>
-          </div>
+          <a href="/" class="flex items-center space-x-3 mb-2 hover:opacity-80 transition cursor-pointer">
+            <img src="/logo.png" alt="COMIBOXCH" class="w-12 h-12 object-contain bg-white rounded-full p-1" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjZmZmIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFiNDMzMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkM8L3RleHQ+PC9zdmc+'" />
+            <div>
+              <h1 class="text-xl font-black tracking-tight leading-tight" style="color: var(--color-primary);">
+                COMIBOX
+              </h1>
+              <h2 class="text-sm font-bold tracking-widest text-white uppercase">
+                Chiriquí
+              </h2>
+            </div>
+          </a>
           <p class="text-xs text-gray-300 font-medium">Panel Administrativo</p>
         </div>
         

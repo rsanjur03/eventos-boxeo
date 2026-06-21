@@ -60,6 +60,22 @@ export default {
         type: 'string',
         title: 'Manager',
       },
+      wins: {
+        type: 'number',
+        title: 'Wins',
+      },
+      losses: {
+        type: 'number',
+        title: 'Losses',
+      },
+      draws: {
+        type: 'number',
+        title: 'Draws',
+      },
+      kos: {
+        type: 'number',
+        title: 'KOs',
+      },
       imageUrl: {
         type: 'media',
         title: 'Image',
